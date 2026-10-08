@@ -1,0 +1,25 @@
+{
+  "kind": "custom_token",
+  "token": {
+    "contract": "Swarm",
+    "name": "swarm",
+    "symbol": "SWARM",
+    "decimals": 18,
+    "constructorArgs": ["$factory", "$poolManager", "$launchNumber"],
+    "totalSupply": "1000000000000000000000000000"
+  },
+  "contracts": [
+    {
+      "contract": "SwarmSwap",
+      "constructorArgs": ["$token"]
+    }
+  ],
+  "pool": {
+    "pairedCurrency": "0x0000000000000000000000000000000000000000",
+    "fee": 3000,
+    "tickSpacing": 60,
+    "initialPrice": "2505414483750479311864138015696063"
+  },
+  "economics": {"poolBps":8000,"initialMarketCapWei":"1000000000000000000","remainderTo":"0xbbf17c1376eb60bdb4a5821042e4ea1bc9aab21e"},
+  "notes": "Ethereum mainnet only (chainId 1), enforced by both constructors. Swarm mints its entire fixed supply once to msg.sender in its constructor. Ordinary transfers send floor(amount / 100) to 0x000000000000000000000000000000000000dEaD and increment totalBurned; this does not reduce totalSupply. Calls from the factory or its registered distributor, and transfers to or from the PoolManager, are exempt to preserve exact launch, claim and swap amounts. There is no further mint, owner, pause, blacklist or configurable tax. SwarmSwap derives its PoolManager from the token and supports native ETH/SWARM swaps with minimum output and deadline checks. No application hook or initialization calls. ETH is currency0; initialPrice is floor(sqrt(totalSupply / initialMarketCapWei) * 2^96), for provenance only. The required economics object specifies a 1 ETH opening market cap and takes precedence over the brief's conflicting 10 ETH description; the deployer derives the opening price from economics and totalSupply."
+}
