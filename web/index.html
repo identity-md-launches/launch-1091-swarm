@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171a16">
+  <meta name="description" content="swarm — one billion SWARM, an ordinary transfer burn of 1%, and a market paired with ETH.">
+  <title>swarm · SWARM on Ethereum</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="swarm home"><span class="brand-mark" aria-hidden="true">✳</span> swarm</a>
+    <span class="network"><span class="dot"></span> Ethereum mainnet</span>
+    <button id="connect" class="quiet">Connect wallet</button>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="headline">
+      <div class="intro">
+        <p class="eyebrow">ONE BILLION. ONE SWARM.</p>
+        <h1 id="headline">Small moves.<br><span>Less supply.</span></h1>
+        <p class="lede">Meet swarm. Every ordinary transfer sends 1% to the burn address. A fixed beginning, a collective future.</p>
+        <div class="token-tag"><span>SWARM</span><span>18 decimals</span><span>No admin keys</span></div>
+      </div>
+      <div class="swarm-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="center-mark">✳</span><span class="art-label">MOVE TOGETHER</span></div>
+    </section>
+
+    <section class="stats" aria-label="Token statistics">
+      <article><p>Name / symbol</p><strong id="metadata">swarm <span>/ SWARM</span></strong></article>
+      <article><p>Fixed token supply</p><strong id="supply">1,000,000,000</strong><small>SWARM · 18 decimals</small></article>
+      <article><p>Total burned</p><strong id="burned">—</strong><small id="burn-note">Awaiting launch</small></article>
+      <article><p>Pool spot price</p><strong id="price">—</strong><small>ETH per SWARM</small></article>
+    </section>
+    <p id="data-status" class="data-status" role="status">Loading launch status…</p>
+
+    <section class="trade-section" aria-labelledby="trade-title">
+      <div class="trade-copy">
+        <p class="eyebrow">JOIN THE MOVEMENT</p>
+        <h2>ETH in.<br> swarm out.</h2>
+        <p>Trade SWARM with native ETH. Get a fresh quote, review your minimum received, then confirm in your wallet.</p>
+        <div class="allocation"><div class="allocation-bar" aria-hidden="true"><i></i><i></i><i></i></div><p><span>80% pool</span><span>10% swarm</span><span>10% paying wallet</span></p></div>
+        <p class="footnote">Opening market cap: 10 ETH. Pool trades and launch distributions are exempt from the ordinary 1% burn. No additional token fee.</p>
+      </div>
+      <div class="swap-card">
+        <div class="card-heading"><h3 id="trade-title">Swap</h3><span class="pill">ETH ↔ SWARM</span></div>
+        <form id="swap-form">
+          <div class="form-row"><label for="direction">Direction</label><select id="direction"><option value="buy">Buy SWARM</option><option value="sell">Sell SWARM</option></select></div>
+          <label class="amount-label" for="amount">You pay</label>
+          <div class="amount-box"><input id="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="balance" required><span id="input-symbol">ETH</span></div>
+          <p id="balance" class="balance">Connect a wallet to see your balance</p>
+          <div class="form-row"><label for="slippage">Slippage tolerance</label><select id="slippage"><option value="50">0.5%</option><option value="100">1%</option><option value="200">2%</option></select></div>
+          <div class="quote-row"><span>Estimated receive</span><strong id="quote">—</strong></div>
+          <div class="quote-row"><span>Minimum receive</span><strong id="minimum">—</strong></div>
+          <button type="submit" id="review" class="primary" disabled>Review swap</button>
+          <button type="button" id="execute" class="primary confirm" hidden>Confirm swap</button>
+          <p id="swap-status" class="swap-status" role="status" aria-live="polite">Trading opens after launch.</p>
+          <a id="transaction" target="_blank" rel="noopener noreferrer" hidden>View transaction ↗</a>
+        </form>
+      </div>
+    </section>
+    <section class="details" aria-label="How the burn works">
+      <h2>A little less, every time.</h2>
+      <p>Send 100 SWARM between ordinary wallets: 99 arrives, 1 goes to <code>0x0000…dEaD</code>. Fractions round down to the smallest token unit. Burned tokens remain in the ERC-20 total supply; “total burned” tracks the automatic transfer charges.</p>
+      <p>The token has one constructor mint, with no owner, pause, blacklist, or later mint. Launch allocations, contributor claims, and pool settlement arrive in full. The pool price is a live market snapshot; your quote includes liquidity and trading fees.</p>
+    </section>
+  </main>
+  <footer><a class="brand" href="#">✳ swarm</a><span>Built to move together.</span><a id="token-link" target="_blank" rel="noopener noreferrer" hidden>View token ↗</a></footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "kind": "custom_token",
+  "chainId": 1,
+  "token": {
+    "contract": "src/Swarm.sol:Swarm",
+    "name": "swarm",
+    "symbol": "SWARM",
+    "decimals": 18,
+    "constructorArgs": [
+      "$factory",
+      "$poolManager",
+      "$launchNumber"
+    ],
+    "totalSupply": "1000000000000000000000000000"
+  },
+  "contracts": [
+    {
+      "contract": "src/SwarmSwap.sol:SwarmSwap",
+      "constructorArgs": [
+        "$token"
+      ]
+    }
+  ],
+  "pool": {
+    "pairedCurrency": "0x0000000000000000000000000000000000000000",
+    "fee": 3000,
+    "tickSpacing": 60,
+    "initialPrice": "792281625142643375935439503360000",
+    "provenance": "ETH is currency0. sqrt(SWARM units / wei) * 2^96; opening cap 10 ETH across 1 billion SWARM."
+  },
+  "economics": {
+    "poolBps": 8000,
+    "initialMarketCapWei": "10000000000000000000",
+    "remainderTo": "$requester"
+  },
+  "notes": [
+    "Template only: the network must resolve every placeholder from the admitted launch before use.",
+    "No application hook. The final platform pool key, including any initialization guard, must be published to the website.",
+    "Ordinary transfers burn floor(amount/100) to DEAD; factory, distributor claim, and PoolManager settlement paths are exempt.",
+    "No extra allocations. Unspent integer seed rounding dust goes with the paying wallet remainder."
+  ]
+}
