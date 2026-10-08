@@ -20,7 +20,7 @@
       <div class="intro">
         <p class="eyebrow">ONE BILLION. ONE SWARM.</p>
         <h1 id="headline">Small moves.<br><span>Less supply.</span></h1>
-        <p class="lede">Meet swarm. Every ordinary transfer sends 1% to the burn address. A fixed beginning, a collective future.</p>
+        <p class="lede">Meet swarm. Every wallet-to-wallet transfer on the SWARM ledger sends 1% to the burn address. A fixed beginning, a collective future.</p>
         <div class="token-tag"><span>SWARM</span><span>18 decimals</span><span>No admin keys</span></div>
       </div>
       <div class="swarm-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="center-mark">✳</span><span class="art-label">MOVE TOGETHER</span></div>
@@ -40,7 +40,7 @@
         <h2>ETH in.<br> swarm out.</h2>
         <p>Trade SWARM with native ETH. Get a fresh quote, review your minimum received, then confirm in your wallet.</p>
         <div class="allocation"><div class="allocation-bar" aria-hidden="true"><i></i><i></i><i></i></div><p><span>80% pool</span><span>10% swarm</span><span>10% paying wallet</span></p></div>
-        <p class="footnote">Opening market cap: 10 ETH. Pool trades and launch distributions are exempt from the ordinary 1% burn. No additional token fee.</p>
+        <p class="footnote">Opening market cap: 10 ETH. Pool trades and launch distributions are exempt from the ordinary 1% burn. Because that exemption applies to anything settled through the Uniswap v4 PoolManager, a transfer routed through it is not burned either: the 1% is enforced on direct SWARM transfers, not guaranteed on every possible path. No additional token fee.</p>
       </div>
       <div class="swap-card">
         <div class="card-heading"><h3 id="trade-title">Swap</h3><span class="pill">ETH ↔ SWARM</span></div>
@@ -63,6 +63,7 @@
       <h2>A little less, every time.</h2>
       <p>Send 100 SWARM between ordinary wallets: 99 arrives, 1 goes to <code>0x0000…dEaD</code>. Fractions round down to the smallest token unit. Burned tokens remain in the ERC-20 total supply; “total burned” tracks the automatic transfer charges.</p>
       <p>The token has one constructor mint, with no owner, pause, blacklist, or later mint. Launch allocations, contributor claims, and pool settlement arrive in full. The pool price is a live market snapshot; your quote includes liquidity and trading fees.</p>
+      <p><strong>Known limit of the burn.</strong> Sells must reach the PoolManager whole or they cannot settle, and buys leave it whole, so transfers to or from the PoolManager are never charged. Anyone can use that path to move SWARM between wallets without the 1%, or hold it as a PoolManager claim that changes hands off the SWARM ledger. “Total burned” counts only what direct transfers actually burned. The burn cannot be moved onto pool trades without a hook, which this token deliberately does not have.</p>
     </section>
   </main>
   <footer><a class="brand" href="#">✳ swarm</a><span>Built to move together.</span><a id="token-link" target="_blank" rel="noopener noreferrer" hidden>View token ↗</a></footer>

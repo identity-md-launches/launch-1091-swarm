@@ -97,8 +97,9 @@ contract SwarmSwap is IUnlockCallback, ReentrancyGuard {
 
     function _key(uint24 fee, int24 tickSpacing, address hooks) private view returns (PoolKey memory) {
         if (fee > 1_000_000 || tickSpacing <= 0 || tickSpacing > 32_767) revert InvalidPool();
-        // Native ETH is always currency0. No hook is deployed by this project; an optional
-        // platform initialization guard can be identified here using the final pool key.
+        // Native ETH is always currency0. No hook is deployed by this project. The launch pool key
+        // carries the platform's initialization guard, so callers pass that address, not zero: a
+        // hookless key names a different pool that anyone may initialize at any price.
         return PoolKey(Currency.wrap(address(0)), Currency.wrap(address(token)), fee, tickSpacing, IHooks(hooks));
     }
 }

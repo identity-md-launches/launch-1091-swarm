@@ -17,6 +17,10 @@ contract Swarm is ERC20 {
     uint64 public immutable launchNumber;
     /// @notice Accumulated automatic 1% charges; excludes voluntary transfers to DEAD.
     uint256 public totalBurned;
+    /// @dev Gas forwarded to the factory's distributor lookup. A plain mapping getter costs about
+    /// 3,000 gas; this budget also covers a proxy hop and a few dozen cold storage reads, so a
+    /// legitimate registry cannot silently fall into the burn path by exceeding it.
+    uint256 private constant LOOKUP_GAS = 100_000;
 
     error MainnetOnly();
     error InvalidLaunchConfiguration();
@@ -45,6 +49,12 @@ contract Swarm is ERC20 {
         super._update(from, to, amount);
     }
 
+    /// @dev The PoolManager exemption is unconditional in both directions because v4 settlement
+    /// credits exactly the balance the manager receives and pays out exactly what it is asked to.
+    /// It therefore also covers transfers that merely pass through the manager's ledger
+    /// (sync/settle/take or ERC-6909 claims) without touching this token's pool. That is a
+    /// documented limit of the burn, not an oversight: a burn on either leg would leave a sell
+    /// unsettled, and the brief allows no hook to move the charge onto the swap itself.
     function _exempt(address from, address to) private view returns (bool) {
         if (msg.sender == factory || from == poolManager || to == poolManager) return true;
         // Static, gas-bounded lookup: a missing or broken registry must not freeze holder transfers.
@@ -54,7 +64,7 @@ contract Swarm is ERC20 {
         uint256 distributor;
         // Copy at most one word, even if the factory returns excessive data.
         assembly ("memory-safe") {
-            ok := staticcall(30000, registry, add(input, 32), mload(input), 0, 32)
+            ok := staticcall(LOOKUP_GAS, registry, add(input, 32), mload(input), 0, 32)
             ok := and(ok, eq(returndatasize(), 32))
             distributor := mload(0)
         }

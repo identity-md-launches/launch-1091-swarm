@@ -53,16 +53,43 @@ allocation, claim, seed, buy, and sell amounts. Accordingly these flows are exem
 
 A transfer **to** the factory or distributor is not exempt on that basis.
 Approving another spender does not let it inherit the distributor exemption.
-PoolManager exemption necessarily covers its other pools and settlement paths
-as well; routing through it can avoid the ordinary wallet-transfer burn. The
-website discloses exempt pool trades. No application hook or ERC-8004 check exists.
+No application hook or ERC-8004 check exists.
+
+**Known limit: the burn is bypassable through the PoolManager.** The PoolManager
+exemption is unconditional in both directions and does not depend on who calls
+or on any pool being touched. Uniswap v4's PoolManager is a permissionless
+settlement ledger: inside its `unlock`, any contract (a 40-line courier, or an
+existing v4 router's SETTLE and TAKE actions) can `sync` SWARM, transfer it in
+(exempt because the recipient is the PoolManager), `settle` for a credit, and
+then `take` it to any wallet (exempt because the sender is the PoolManager) or
+`mint` an ERC-6909 claim that changes hands indefinitely without touching this
+token's ledger. The cost is gas only, so any over-the-counter or large transfer
+can avoid the 1%, and `totalBurned` and the dead-address balance understate the
+deflation a literal reading of "every transfer" would promise. The 1% is enforced
+on direct SWARM transfers; it is not a guarantee over every path.
+
+This is a deliberate scope decision, not an oversight, and no token-level fix
+exists within the brief. The PoolManager credits a sell with exactly the balance
+it receives, so a burn on transfers **to** it would leave every sell unsettled
+and revert; a burn on transfers **from** it would short every buy, which the
+launch floor refuses; and a courier's settle is indistinguishable at the token
+level from a sell's settle. Moving the 1% onto pool trades would need an
+`afterSwap` hook, which the brief rules out. The requester should treat the
+options as: (a) accept the weaker guarantee, which is what this delivery
+implements and states on the website, or (b) commission a hook, which changes
+the brief. `test/SwarmSwap.t.sol` pins the exempt pass-through path with the real
+vendored PoolManager so the limit is tested, not merely documented.
 
 The factory registry is the platform trust boundary. Its selected distributor
 can transfer without the fee, but cannot seize unapproved balances. Ordinary
-transfers use a 30,000-gas static lookup with a bounded one-word return buffer;
+transfers use a 100,000-gas static lookup with a bounded one-word return buffer;
 a reverted, missing, or malformed response falls back to the ordinary burn and
-does not deliberately freeze users. The platform must keep the launch's mapping
-correct and its claim path working. There are no token admin keys to repair it.
+does not deliberately freeze users. A plain mapping getter costs about 3,000 gas,
+so the budget leaves room for a proxy hop and extra bookkeeping; a registry that
+exceeded it would silently short claims by 1%, which is why the budget is wide
+and a test exercises a 45,000-gas lookup. The platform must keep the launch's
+mapping correct and its claim path working. There are no token admin keys to
+repair it.
 
 ## Deployment parameters
 
@@ -108,10 +135,15 @@ than 10,000 token base units of the 80% budget in the factory in this setup;
 that dust belongs with the paying wallet remainder. The price crosses a small
 empty tick gap before the first trade becomes active.
 
-The protected platform harness uses its own initialization-only guard. This
-project deploys no hook. If the platform attaches its mandatory guard, publish
-that actual address as `web/config.mjs`'s `pool.hooks`; the pool key must match
-exactly. A genuinely hookless pool uses the protocol-defined zero hook value.
+The launch pool key is **not hookless**. This project deploys no hook, but the
+platform factory attaches its own pool initialization guard (a hook mined for
+the BEFORE_INITIALIZE flag) to the pool it opens, and that guard's address is
+part of the pool key. `web/config.mjs` therefore ships `pool.hooks` as `null`,
+like `token` and `swap`, and the site refuses both `null` and the zero address.
+Publish the guard address from the launch record. A hookless key would point the
+site at a different ETH/SWARM 3000/60 pool that anyone can initialize at any
+price with a few gwei of liquidity, after which the site would show the
+squatter's price and route swaps there.
 
 ## Swap and website
 
@@ -149,9 +181,13 @@ pending or reverted receipts and user rejection are shown explicitly.
    addresses, immutable configuration, and pool ID. This assignment sends no
    transactions and handles no keys.
 4. Set `web/config.mjs`'s `token` and `swap` to the verified deployment addresses,
-   and `pool` to the exact final key. These are static website settings, not
-   owner-settable contract state. Keep the chain at 1; choose a reliable mainnet
-   read RPC (the public endpoint is the supplied website default).
+   and `pool.hooks` to the platform's pool initialization guard address from the
+   launch record, so `pool` is the exact final key. Confirm it by reading
+   `SwarmSwap.poolState(fee, tickSpacing, hooks)` and checking that the returned
+   price is the opening price, not zero and not a stranger's. These are static
+   website settings, not owner-settable contract state. Keep the chain at 1;
+   choose a reliable mainnet read RPC (the public endpoint is the supplied
+   website default).
 5. Confirm live mint/allocation/claim balances, pool price, a small buy and sell,
    ordinary transfer burn, and the website's quotes. Host the website over HTTPS
    and monitor RPC availability. No contract setter or initialization is needed.
@@ -160,8 +196,9 @@ pending or reverted receipts and user rejection are shown explicitly.
 
 The delivered tests cover metadata, single constructor mint, mainnet restriction,
 burn events/rounding/self-transfers, allowances/revocation/failure rollback,
-missing or malformed registry, exact launch allocations and claims, administrative
-call rejection, local real-v4 seeding and bidirectional swaps, pool price math,
+missing, malformed, or expensive registry, exact launch allocations and claims,
+administrative call rejection, local real-v4 seeding and bidirectional swaps,
+the exempt PoolManager pass-through path (take and ERC-6909 claim), pool price math,
 slippage, deadlines, wrong value, unauthorized callbacks, partial fills, ETH
 receiver failure, and reentrancy. Fuzz tests cover arbitrary transfer sizes and
 trade sizes; a stateful invariant checks conservation over mixed transfer and

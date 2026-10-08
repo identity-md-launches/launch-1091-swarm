@@ -76,10 +76,14 @@ export function minOutput(quoted, slippageBps) {
 
 export function validateConfig(config) {
   if (config.chainId !== 1) throw new Error("Only Ethereum mainnet is supported.");
-  if (!isAddress(config.token) || !isAddress(config.swap)) throw new Error("Launch pending. Trading opens when the verified contracts are published.");
+  if (!isAddress(config.token) || !isAddress(config.swap) || config.pool.hooks === null) {
+    throw new Error("Launch pending. Trading opens when the verified contracts and pool key are published.");
+  }
+  // The platform's pool key carries its initialization guard hook; a hookless key would point the
+  // site at a different pool that anyone can initialize at any price, so zero is not accepted.
   if (!Number.isInteger(config.pool.fee) || config.pool.fee < 0 || config.pool.fee > 1_000_000
     || !Number.isInteger(config.pool.tickSpacing) || config.pool.tickSpacing <= 0 || config.pool.tickSpacing > 32767
-    || !isAddress(config.pool.hooks, true)) throw new Error("Invalid published pool configuration.");
+    || !isAddress(config.pool.hooks)) throw new Error("Invalid published pool configuration.");
 }
 
 export async function httpRpc(url, method, params = []) {

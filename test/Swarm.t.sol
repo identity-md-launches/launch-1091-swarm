@@ -206,6 +206,26 @@ contract SwarmTest is Test {
         assertEq(token.totalBurned(), 6 ether);
     }
 
+    /// @dev A registry whose correct answer costs more than the old 30,000-gas budget (proxy hop,
+    /// extra bookkeeping) must still exempt claims; the shortfall would otherwise be silent.
+    function testExpensiveButCorrectRegistryStillExemptsClaims() public {
+        factory.setRegistryMode(6);
+        uint256 lookup = factory.lookupGas();
+        assertGt(lookup, 30_000, "the heavy registry mode must exceed the old budget");
+        assertLt(lookup, 60_000, "the heavy registry mode must fit the current budget with margin");
+        factory.move(distributor, SUPPLY / 10);
+        vm.prank(distributor);
+        token.transfer(alice, SUPPLY / 10);
+        assertEq(token.balanceOf(alice), SUPPLY / 10);
+        assertEq(token.balanceOf(distributor), 0);
+        assertEq(token.totalBurned(), 0);
+        // Ordinary transfers still pay through the same expensive lookup.
+        vm.prank(alice);
+        token.transfer(bob, 100 ether);
+        assertEq(token.balanceOf(bob), 99 ether);
+        assertEq(token.totalBurned(), 1 ether);
+    }
+
     function testRuntimeHasNoDelegatecallCallcodeOrSelfdestruct() public view {
         bytes memory runtime = address(token).code;
         assertGt(runtime.length, 0);

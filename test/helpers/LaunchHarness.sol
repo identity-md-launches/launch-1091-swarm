@@ -20,6 +20,9 @@ contract LaunchHarness is IUnlockCallback {
     Swarm public token;
     address private distributor;
     uint256 private registryMode;
+    /// @dev Gas the "heavy registry" mode spends before answering: above the 30,000 the token once
+    /// forwarded, well inside the 100,000 it forwards now, and independent of storage warmth.
+    uint256 public constant HEAVY_LOOKUP_GAS = 45_000;
 
     constructor(IPoolManager manager_) {
         manager = manager_;
@@ -52,7 +55,19 @@ contract LaunchHarness is IUnlockCallback {
                 return(0, 0)
             }
         }
+        if (registryMode == 6) {
+            // A registry behind a proxy or with extra bookkeeping: correct answer, expensive lookup.
+            uint256 target = gasleft() - HEAVY_LOOKUP_GAS;
+            while (gasleft() > target) {}
+        }
         return number == NUMBER ? distributor : address(0);
+    }
+
+    /// @dev Gas one external `distributorOf` call costs in the current registry mode.
+    function lookupGas() external view returns (uint256 used) {
+        uint256 before = gasleft();
+        this.distributorOf(NUMBER);
+        used = before - gasleft();
     }
 
     function setRegistryMode(uint256 mode) external {

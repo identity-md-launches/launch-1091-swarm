@@ -35,8 +35,8 @@
   },
   "notes": [
     "Template only: the network must resolve every placeholder from the admitted launch before use.",
-    "No application hook. The final platform pool key, including any initialization guard, must be published to the website.",
-    "Ordinary transfers burn floor(amount/100) to DEAD; factory, distributor claim, and PoolManager settlement paths are exempt.",
+    "No application hook. The platform's pool key carries its initialization guard; that guard address must be published as web/config.mjs pool.hooks, which ships null and refuses zero.",
+    "Ordinary transfers burn floor(amount/100) to DEAD; factory, distributor claim, and PoolManager settlement paths are exempt. The PoolManager exemption is unconditional, so SWARM routed through the PoolManager (settle/take or ERC-6909 claims) is not burned; this accepted limit is disclosed on the website.",
     "No extra allocations. Unspent integer seed rounding dust goes with the paying wallet remainder."
   ]
 }

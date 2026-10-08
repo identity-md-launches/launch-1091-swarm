@@ -51,13 +51,18 @@ test("dynamic text decoding validates offsets and length", () => {
 });
 
 test("unpublished deployments and incorrect chains fail closed", () => {
+  assert.equal(config.pool.hooks, null, "the hook ships unpublished, like the contract addresses");
   assert.throws(() => validateConfig(config), /Launch pending/);
   assert.throws(() => validateConfig({ ...config, chainId: 8453 }), /mainnet/);
   // Synthetic addresses are local test inputs, never deployment defaults.
-  const fixture = { ...config, token: "0x" + "1".repeat(40), swap: "0x" + "2".repeat(40) };
+  const hooked = { ...config.pool, hooks: "0x" + "3".repeat(40) };
+  const fixture = { ...config, token: "0x" + "1".repeat(40), swap: "0x" + "2".repeat(40), pool: hooked };
   assert.doesNotThrow(() => validateConfig(fixture));
   assert.throws(() => validateConfig({ ...fixture, token: ZERO }));
-  assert.throws(() => validateConfig({ ...fixture, pool: { ...fixture.pool, tickSpacing: 0 } }));
+  assert.throws(() => validateConfig({ ...fixture, pool: { ...hooked, tickSpacing: 0 } }));
+  // Filling only the contract addresses is not enough: the pool key needs the platform's guard hook.
+  assert.throws(() => validateConfig({ ...fixture, pool: { ...hooked, hooks: null } }), /Launch pending/);
+  assert.throws(() => validateConfig({ ...fixture, pool: { ...hooked, hooks: ZERO } }), /pool configuration/);
 });
 
 test("RPC errors are surfaced rather than displayed as market data", async () => {

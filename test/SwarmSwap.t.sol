@@ -4,6 +4,9 @@ pragma solidity 0.8.26;
 import {Test} from "forge-std/Test.sol";
 import {IERC20Errors} from "@openzeppelin/contracts/interfaces/draft-IERC6093.sol";
 import {PoolManager} from "v4-core/src/PoolManager.sol";
+import {IPoolManager} from "v4-core/src/interfaces/IPoolManager.sol";
+import {IUnlockCallback} from "v4-core/src/interfaces/callback/IUnlockCallback.sol";
+import {Currency} from "v4-core/src/types/Currency.sol";
 import {Swarm} from "../src/Swarm.sol";
 import {SwarmSwap} from "../src/SwarmSwap.sol";
 import {LaunchHarness} from "./helpers/LaunchHarness.sol";
@@ -29,6 +32,37 @@ contract ReenteringTrader {
         require(!rejectETH, "reject ETH");
         (reentrySucceeded,) =
             address(router).call(abi.encodeCall(SwarmSwap.swap, (3000, 60, address(0), false, 1, 1, block.timestamp)));
+    }
+}
+
+/// @dev Moves SWARM between two wallets through the PoolManager's ledger without touching any pool:
+/// settle in, then take out or mint an ERC-6909 claim. Models a router's SETTLE + TAKE actions.
+contract PassThroughCourier is IUnlockCallback {
+    IPoolManager private immutable manager;
+    Swarm private immutable token;
+    address private sender;
+
+    constructor(IPoolManager manager_, Swarm token_) {
+        manager = manager_;
+        token = token_;
+    }
+
+    function send(address to, uint256 amount, bool asClaim) external {
+        sender = msg.sender;
+        manager.unlock(abi.encode(to, amount, asClaim));
+        sender = address(0);
+    }
+
+    function unlockCallback(bytes calldata data) external returns (bytes memory) {
+        require(msg.sender == address(manager), "manager only");
+        (address to, uint256 amount, bool asClaim) = abi.decode(data, (address, uint256, bool));
+        Currency currency = Currency.wrap(address(token));
+        manager.sync(currency);
+        token.transferFrom(sender, address(manager), amount);
+        require(manager.settle() == amount, "exact settlement");
+        if (asClaim) manager.mint(to, currency.toId(), amount);
+        else manager.take(currency, to, amount);
+        return "";
     }
 }
 
@@ -116,6 +150,32 @@ contract SwarmSwapTest is Test {
         token.transfer(bob, bought);
         assertEq(token.balanceOf(bob) - beforeBob, bought - bought / 100);
         assertEq(token.totalBurned(), bought / 100);
+    }
+
+    /// @dev Pins the documented limit of the burn: SWARM routed through the PoolManager's ledger
+    /// (settle in, take out, or an ERC-6909 claim) is exempt in both directions, pool or no pool.
+    /// This is the same exemption that lets a sell settle exactly; the README, SECURITY.md and the
+    /// website state it. A change that makes this test fail changes the launch's settlement flows.
+    function testPoolManagerPassThroughIsExemptAndDisclosed() public {
+        uint256 bought = _buy(0.01 ether);
+        PassThroughCourier courier = new PassThroughCourier(manager, token);
+        address carol = makeAddr("carol");
+        uint256 beforeBob = token.balanceOf(bob);
+        uint256 beforeManager = token.balanceOf(address(manager));
+        vm.startPrank(alice);
+        token.approve(address(courier), bought);
+        courier.send(bob, bought / 2, false);
+        courier.send(carol, bought - bought / 2, true);
+        vm.stopPrank();
+        assertEq(token.balanceOf(bob) - beforeBob, bought / 2, "take delivered the gross amount");
+        assertEq(manager.balanceOf(carol, Currency.wrap(address(token)).toId()), bought - bought / 2);
+        assertEq(token.balanceOf(address(manager)) - beforeManager, bought - bought / 2);
+        assertEq(token.balanceOf(alice), 0);
+        assertEq(token.totalBurned(), 0, "no burn applies to PoolManager settlement in either direction");
+        // Leaving the manager's ledger for a wallet-to-wallet transfer pays the ordinary charge again.
+        vm.prank(bob);
+        token.transfer(carol, bought / 2);
+        assertEq(token.totalBurned(), (bought / 2) / 100);
     }
 
     function testMinimumOutputFailureRollsBackPoolAndBalances() public {

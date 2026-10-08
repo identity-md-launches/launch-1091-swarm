@@ -10,9 +10,31 @@ trust assumption, not a token admin interface.
 The burn override uses checked arithmetic and the inherited balance update.
 Reverting after either movement rolls back balances, the allowance, the burn
 counter, and events. Both self-transfers and transferFrom require the gross
-amount. The registry lookup is static, has a gas bound, copies at most one word,
-and rejects malformed address data. Tests cover a reverting registry, empty and
-oversized return data, invalid address data, and gas exhaustion.
+amount. The registry lookup is static, forwards a 100,000-gas budget, copies at
+most one word, and rejects malformed address data. Tests cover a reverting
+registry, empty and oversized return data, invalid address data, gas exhaustion,
+and a correct registry whose lookup costs 45,000 gas. A lookup that fails falls
+back to the burn rather than reverting, so the budget is deliberately wide: a
+registry that exceeded it would short every contributor claim by 1% with no
+revert or event to signal it.
+
+**Accepted limitation: the burn is bypassable through the PoolManager.** Both
+transfer directions involving the PoolManager are exempt, unconditionally, and
+the PoolManager is a permissionless ledger. Anyone can settle SWARM into it and
+take it out to another wallet, or hold it as an ERC-6909 claim, without paying
+the 1%; the cost is gas. This cannot be closed at the token level: a burn on
+transfers into the manager leaves sells unsettled, a burn on transfers out of it
+shorts buys, and the brief forbids a hook. The limit is pinned by a test against
+the real vendored PoolManager and disclosed on the website and in the README, so
+the guarantee holders are given is "direct SWARM transfers burn 1%", not "every
+path burns 1%". The requester may instead commission an `afterSwap` hook, which
+would change the brief.
+
+**Website pool key.** The platform's pool key includes its initialization guard
+hook. The site ships that address as `null` and refuses the zero address, because
+a hookless key names a pool that anyone can initialize at an arbitrary price,
+which would make the displayed price, the simulated quote and the minimum-output
+protection all refer to the wrong pool.
 
 Swap authorization is tied to the public caller. `payer` is set to `msg.sender`
 inside the nonReentrant swap entry point, and an unlock callback is accepted only
@@ -49,12 +71,14 @@ reviewed against the implementation and tests:
 
 ## Evidence and operational limits
 
-Local checks: `forge build`, `forge test` (33 tests, including two fuzz tests and
-an invariant with 128 runs / 8,192 operations), `forge fmt --check`, eight Node
-frontend tests, and a Chromium browser smoke check of desktop/mobile layout,
-launch-pending state, simulated live reads, buy confirmation, exact sell approval,
-sell confirmation, and wallet-chain invalidation. Browser wallet/RPC responses
-were mocked; Solidity integration tests used the real vendored PoolManager.
+Local checks: `forge build`, `forge test` (35 tests, including two fuzz tests and
+an invariant with 128 runs / 8,192 operations), `forge fmt --check`, and eight
+Node frontend tests. An earlier revision also ran a Chromium browser smoke check
+of desktop/mobile layout, launch-pending state, simulated live reads, buy
+confirmation, exact sell approval, sell confirmation, and wallet-chain
+invalidation; the current revision changed only copy and the hook validation on
+the web side and re-ran the Node tests. Browser wallet/RPC responses were mocked;
+Solidity integration tests used the real vendored PoolManager.
 
 The provided protected harness was inspected but requires the network's final
 manifest, addresses, environment, and platform contracts to execute. Its exact
