@@ -3,7 +3,8 @@
 All contract dependencies are ordinary source files under `lib/`; no install,
 submodule, package manager, network access, or FFI is needed to build or test.
 Only relevant source files and their original licenses are included. The website
-uses native browser APIs and has no runtime dependencies or external assets.
+uses native browser APIs and has no runtime dependencies or external assets; its build
+uses Vite and TypeScript as dev dependencies pinned in `web/package-lock.json`.
 
 | Package | Revision | Scope | License |
 | --- | --- | --- | --- |

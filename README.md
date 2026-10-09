@@ -1,23 +1,54 @@
 # swarm (SWARM)
 
-A fixed-supply Ethereum mainnet ERC-20, a native ETH swap adapter, and a static
-website. Solidity 0.8.26 is pinned in `foundry.toml`; contract dependencies are
-vendored as ordinary files. There are no keys, environment-variable requirements,
-installation steps, or network calls in the test suite.
+<img src="assets/logo.svg" alt="SWARM logo" width="96" align="right">
 
-## Run locally
+A fixed-supply Ethereum mainnet ERC-20, a native ETH swap adapter, and the
+SwarmSwap static website. Solidity 0.8.26 is pinned in `foundry.toml`; contract
+dependencies are vendored as ordinary files. The contract test suite needs no keys,
+environment variables, installation steps, or network calls.
+
+The official SWARM mark (a cybernetic gold and cyan bee in a hexagonal honeycomb
+border on a dark ground) is `assets/logo.svg`, with a 512×512 raster in
+`assets/logo.png`. The website embeds both in its header, token selector, web app
+manifest (`manifest.webmanifest`) and token list (`swarm.tokenlist.json`) for the
+token contract `0xd2aef07b4a807062c1c9f01713def52172548eca`.
+
+## Contracts: build and test
 
 ```sh
 forge build
 forge test
 forge fmt --check
-node --test web/test/*.test.mjs
-python3 -m http.server 8080 --directory web
 ```
 
-Open `http://localhost:8080`. The site shows a launch-pending state until its
-deployment configuration is filled. Serve `web/` over HTTPS in production; it has
-no build step, CDN imports, analytics, fonts, or third-party JavaScript.
+## Website: install, preview, rebuild, publish
+
+The site is a single page in `web/` (plain HTML, CSS and TypeScript, no framework)
+built with Vite. The finished export is committed in `dist/` so a publisher can serve
+it without rebuilding. Node 24 and npm 11 were used.
+
+```sh
+cd web
+npm install          # installs vite and typescript from package-lock.json
+npm run dev          # local development server with live reload
+npm run typecheck    # tsc --noEmit
+npm test             # node --test test/*.test.ts (integer, ABI, config and manifest tests)
+npm run build        # production export to ../dist with relative URLs
+npm run preview      # serves ../dist locally to check the export
+```
+
+Rebuild after any change under `web/` or `assets/`, then commit `dist/` together with
+the source and `web/package-lock.json`. Never commit `web/node_modules`.
+
+Publish by uploading the contents of `dist/` to any static host, IPFS gateway or ENS
+content hash; `vite.config.ts` sets `base: "./"`, so the page works from a subpath.
+Serve over HTTPS. There is no server-side routing, backend, analytics or third-party
+script. `dist/assets/logo.svg` and `dist/assets/logo.png` keep stable names because the
+manifest and token list point at them.
+
+Design tokens, typography, components and responsive behaviour are documented in
+`DESIGN.md`; the build, interaction and Better Interface review results are in
+`artifacts/validation.md`.
 
 ## Token behavior and assumptions
 
@@ -138,9 +169,9 @@ empty tick gap before the first trade becomes active.
 The launch pool key is **not hookless**. This project deploys no hook, but the
 platform factory attaches its own pool initialization guard (a hook mined for
 the BEFORE_INITIALIZE flag) to the pool it opens, and that guard's address is
-part of the pool key. `web/config.mjs` therefore ships `pool.hooks` as `null`,
-like `token` and `swap`, and the site refuses both `null` and the zero address.
-Publish the guard address from the launch record. A hookless key would point the
+part of the pool key. `web/src/config.ts` therefore carries the guard address from
+the verified launch record as `pool.hooks` (with the record's fee 12500 and tick
+spacing 60), and the site refuses both `null` and the zero address. A hookless key would point the
 site at a different ETH/SWARM 3000/60 pool that anyone can initialize at any
 price with a few gwei of liquidity, after which the site would show the
 squatter's price and route swaps there.
@@ -180,9 +211,9 @@ pending or reverted receipts and user rejection are shown explicitly.
    sources/bytecode with this exact compiler configuration; record receipts,
    addresses, immutable configuration, and pool ID. This assignment sends no
    transactions and handles no keys.
-4. Set `web/config.mjs`'s `token` and `swap` to the verified deployment addresses,
-   and `pool.hooks` to the platform's pool initialization guard address from the
-   launch record, so `pool` is the exact final key. Confirm it by reading
+4. `web/src/config.ts` holds the verified token, SwarmSwap and pool key (including
+   the platform's pool initialization guard hook) copied from the launch record.
+   Change them only from a newer verified record, then rebuild and recommit `dist/`. Confirm it by reading
    `SwarmSwap.poolState(fee, tickSpacing, hooks)` and checking that the returned
    price is the opening price, not zero and not a stranger's. These are static
    website settings, not owner-settable contract state. Keep the chain at 1;
@@ -202,8 +233,13 @@ the exempt PoolManager pass-through path (take and ERC-6909 claim), pool price m
 slippage, deadlines, wrong value, unauthorized callbacks, partial fills, ETH
 receiver failure, and reentrancy. Fuzz tests cover arbitrary transfer sizes and
 trade sizes; a stateful invariant checks conservation over mixed transfer and
-transferFrom sequences. The frontend's integer/ABI/configuration tests use Node's
-built-in test runner and need no packages.
+transferFrom sequences. The frontend's integer/ABI/configuration/manifest tests
+use Node's built-in test runner on the TypeScript sources and need no packages beyond
+the dev dependencies. On 2026-10-09 `npm run typecheck`, `npm test` (9 passing) and
+`npm run build` all exited 0, and the export was inspected in Chromium at 1366, 820,
+375 and 320 px widths with live mainnet reads, no console errors, no failed resources
+and no horizontal overflow; see `artifacts/validation.md` for the full record and the
+checks that were not performed (screen reader, automated audit, on-chain swap).
 
 The protected file was read as the launch compatibility specification; it depends
 on network-supplied manifest/environment and platform contracts absent from this

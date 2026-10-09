@@ -1,0 +1,29 @@
+{
+  "name": "SWARM official token list",
+  "timestamp": "2026-10-09T00:00:00Z",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "keywords": [
+    "swarm",
+    "swarmswap"
+  ],
+  "logoURI": "./assets/logo.png",
+  "tokens": [
+    {
+      "chainId": 1,
+      "address": "0xd2aef07b4a807062c1c9f01713def52172548eca",
+      "name": "swarm",
+      "symbol": "SWARM",
+      "decimals": 18,
+      "logoURI": "./assets/logo.png",
+      "extensions": {
+        "logoSvgURI": "./assets/logo.svg",
+        "swapAdapter": "0x4bc05bda38e6e4a6158b5eeb825208c1f2380360",
+        "sourceCommit": "a90f7546492326d5f6a43b04cf685124063ac858"
+      }
+    }
+  ]
+}
