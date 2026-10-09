@@ -1,0 +1,14 @@
+HTTP/2 200 
+cache-control: public, max-age=60
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src https:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+content-type: application/manifest+json
+date: Fri, 09 Oct 2026 18:32:58 GMT
+etag: W/"aa917b5a88c26ea10ecd478ae9a5f861"
+referrer-policy: strict-origin-when-cross-origin
+server: railway-hikari
+x-content-type-options: nosniff
+x-ipfs-cid: bafybeid3t2wvhqu6xb55dtbgmtdk2enyniinucfbd2juqltwaaohg5dceq
+x-railway-request-id: GitF2xCDRZGfoX2jaP71AA
+x-railway-edge: jfk1
+x-hikari-trace: jfk1.aghq
+

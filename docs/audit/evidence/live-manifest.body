@@ -26,15 +26,12 @@
       "name": "Swarm",
       "symbol": "SWARM",
       "chainId": 1,
-      "address": "0xd2aef07b4a807062c1c9f01713def52172548eca",
-      "logoURI": "./assets/logo.svg",
-      "logoPngURI": "./assets/logo.png"
+      "address": "0xd2aef07b4a807062c1c9f01713def52172548eca"
     },
     {
       "name": "SwarmSwap",
       "chainId": 1,
       "address": "0x4bc05bda38e6e4a6158b5eeb825208c1f2380360"
     }
-  ],
-  "project_url": "https://swarm.sites.imd.fun/"
+  ]
 }

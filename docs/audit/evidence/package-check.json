@@ -1,0 +1,13 @@
+{
+  "fileCount": 198,
+  "uncompressedCandidateBytes": 3545336,
+  "compressedTreeProxyBytes": 1681053,
+  "limitBytes": 8388608,
+  "distBytes": 215958,
+  "protectedFilesUnchanged": 93,
+  "runtimeAssetReferencesChecked": 13,
+  "internalAnchorsChecked": 7,
+  "reportAndManifestCopiesIdentical": true,
+  "localMarkdownLinksResolve": true,
+  "packagingNote": "No Git index/commit/bundle was created: .git changes are forbidden. Candidate files were selected read-only using git ls-files; compressed-tree proxy is not an actual Git bundle."
+}

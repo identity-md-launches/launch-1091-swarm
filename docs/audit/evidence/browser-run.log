@@ -1,0 +1,284 @@
+{
+  "url": "http://127.0.0.1:33713/preview/",
+  "views": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "brokenImages": []
+    },
+    {
+      "width": 820,
+      "scrollWidth": 820,
+      "overflow": [],
+      "brokenImages": []
+    },
+    {
+      "width": 576,
+      "scrollWidth": 576,
+      "overflow": [],
+      "brokenImages": []
+    },
+    {
+      "width": 375,
+      "scrollWidth": 375,
+      "overflow": [],
+      "brokenImages": []
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "brokenImages": []
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "checks": [
+    {
+      "name": "Live Ethereum reads and exact runtime-code checks",
+      "result": "Live on Ethereum · block 26,156,761 · updated 6:51:30 PM"
+    },
+    {
+      "name": "Keyboard skip and Tab traversal",
+      "result": "Skip link focuses main; native controls and record links reachable",
+      "tabStops": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Overview"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Swap"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Launch report ↗"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Read the launch record ↓"
+        },
+        {
+          "tag": "SELECT",
+          "id": "direction",
+          "text": "Buy SWARMSell SWARM"
+        },
+        {
+          "tag": "INPUT",
+          "id": "amount",
+          "text": ""
+        },
+        {
+          "tag": "SELECT",
+          "id": "slippage",
+          "text": "0.5%1%2%"
+        },
+        {
+          "tag": "BUTTON",
+          "id": "review",
+          "text": "Review swap"
+        },
+        {
+          "tag": "BUTTON",
+          "id": "copy-address",
+          "text": "Copy address"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Inspect source evidence ↗"
+        },
+        {
+          "tag": "A",
+          "id": "download-logo",
+          "text": "Download official PNG ↓"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Download listing JSON ↓"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Download report ↓Markdown"
+        },
+        {
+          "tag": "SUMMARY",
+          "id": "",
+          "text": "What still needs confirmation?"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "SWARM"
+        },
+        {
+          "tag": "A",
+          "id": "token-link",
+          "text": "SWARM token on Etherscan ↗"
+        },
+        {
+          "tag": "A",
+          "id": "swap-link",
+          "text": "SwarmSwap contract on Etherscan ↗"
+        },
+        {
+          "tag": "BODY",
+          "id": "",
+          "text": "Skip to content\n  \n    \n      \n      SWARMSwarmSwap\n    \n     Ethereum"
+        }
+      ]
+    },
+    {
+      "name": "Report navigation",
+      "hash": "#launch-report"
+    },
+    {
+      "name": "Copy address",
+      "status": "Contract address copied.",
+      "clipboard": "0xd2aef07b4a807062c1c9f01713def52172548eca"
+    },
+    {
+      "name": "Download SWARM_DRAFT_CONTRACT_REPORT.md",
+      "filename": "SWARM_DRAFT_CONTRACT_REPORT.md",
+      "failure": null,
+      "bytes": 20912,
+      "sha256": "2bbab70828289cda475ac71f7c245cac7fd1f4dd12fb0b9318746517965deaa4"
+    },
+    {
+      "name": "Download swarm.listing-draft.json",
+      "filename": "swarm.listing-draft.json",
+      "failure": null,
+      "bytes": 8276,
+      "sha256": "37d793a67ee29fc60911c97123618c62ce79dd68c0815e905236f10dd4f7ea5d"
+    },
+    {
+      "name": "Download SWARM-logo-512.png",
+      "filename": "SWARM-logo-512.png",
+      "failure": null,
+      "bytes": 121177,
+      "sha256": "1340467fb73bfb15e2fd6ebfe79f4615e02554d2bf29095029c54ae89c589e40"
+    },
+    {
+      "name": "Keyboard disclosure",
+      "open": true
+    },
+    {
+      "name": "Sell selector",
+      "pay": "SWARM",
+      "logo": true,
+      "contract": "0xd2aef07b4a807062c1c9f01713def52172548eca"
+    },
+    {
+      "name": "Buy selector",
+      "receive": "SWARM",
+      "logo": true
+    },
+    {
+      "name": "Invalid amount before wallet request",
+      "invalid": "true",
+      "error": "Enter a positive amount with at most 18 decimals.",
+      "focus": "amount"
+    },
+    {
+      "name": "Missing wallet recovery",
+      "status": "Install an Ethereum wallet, then connect it to trade."
+    },
+    {
+      "name": "Reduced motion",
+      "durations": "0s"
+    },
+    {
+      "name": "200% root text enlargement at 820px",
+      "width": 820,
+      "overflow": []
+    },
+    {
+      "name": "Fixture buy review",
+      "result": "1,000 SWARM quote, 995 minimum at 0.5%, no send before confirmation"
+    },
+    {
+      "name": "Fixture slippage/account change",
+      "result": "Quote invalidated; minimum recomputed at 1%"
+    },
+    {
+      "name": "Fixture quote expiry",
+      "result": "Invalidated after 31 seconds of virtual time; no real wait"
+    },
+    {
+      "name": "Fixture buy confirmation",
+      "result": "Correct adapter, 0.01 ETH value, receipt success displayed; mocked provider only"
+    },
+    {
+      "name": "Fixture sell review",
+      "result": "Exact 100 SWARM approval, confirmed receipt, quote ready; no sell sent before confirmation"
+    },
+    {
+      "name": "Fixture wallet rejection",
+      "result": "Cancellation message; stale quote cleared"
+    },
+    {
+      "name": "Fixture offline and retry",
+      "result": "Trading disabled, then recovered",
+      "initial": "The Ethereum connection is unavailable."
+    },
+    {
+      "name": "Fixture wrong-code and retry",
+      "result": "Trading disabled, then recovered",
+      "initial": "Contract code differs from the reviewed deployment. Trading is unavailable."
+    },
+    {
+      "name": "Fixture wrong-chain and retry",
+      "result": "Trading disabled, then recovered",
+      "initial": "The configured connection is not Ethereum mainnet."
+    },
+    {
+      "name": "Fixture clipboard denied",
+      "result": "Manual-copy fallback visible"
+    }
+  ],
+  "contrast": [
+    {
+      "selector": ".record-card h3",
+      "foreground": "rgb(238, 243, 248)",
+      "background": "rgb(18, 26, 35)",
+      "ratio": 15.705422963702842
+    },
+    {
+      "selector": ".record-card > p",
+      "foreground": "rgb(166, 179, 194)",
+      "background": "rgb(18, 26, 35)",
+      "ratio": 8.222474480052885
+    },
+    {
+      "selector": ".record-card dt",
+      "foreground": "rgb(166, 179, 194)",
+      "background": "rgb(18, 26, 35)",
+      "ratio": 8.222474480052885
+    },
+    {
+      "selector": ".record-card .text-link",
+      "foreground": "rgb(25, 230, 255)",
+      "background": "rgb(18, 26, 35)",
+      "ratio": 11.525019189897574
+    },
+    {
+      "selector": ".download-button",
+      "foreground": "rgb(26, 20, 0)",
+      "background": "rgb(245, 197, 24)",
+      "ratio": 11.260802145317893
+    },
+    {
+      "selector": ".draft-label",
+      "foreground": "rgb(166, 179, 194)",
+      "background": "rgb(11, 15, 20)",
+      "ratio": 9.013273068159979
+    }
+  ]
+}

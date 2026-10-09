@@ -1,0 +1,49 @@
+{
+  "rpc": "https://eth.drpc.org",
+  "blockNumber": 26156668,
+  "error": "curl: (22) The requested URL returned error: 500\n",
+  "response": "[{\"id\":1,\"jsonrpc\":\"2.0\",\"error\":{\"message\":\"Batch of more than 3 requests are not allowed on free plan, to use this feature register paid account at drpc.org\",\"code\":31}},{\"id\":2,\"jsonrpc\":\"2.0\",\"error\":{\"message\":\"Batch of more than 3 requests are not allowed on free plan, to use this feature register paid account at drpc.org\",\"code\":31}},{\"id\":3,\"jsonrpc\":\"2.0\",\"error\":{\"message\":\"Batch of more than 3 requests are not allowed on free plan, to use this feature register paid account at drpc.org\",\"code\":31}},{\"id\":4,\"jsonrpc\":\"2.0\",\"error\":{\"message\":\"Batch of more than 3 requests are not allowed on free plan, to use this feature register paid account at drpc.org\",\"code\":31}},{\"id\":5,\"jsonrpc\":\"2.0\",\"error\":{\"message\":\"Batch of more than 3 requests are not allowed on free plan, to use this feature register paid account at drpc.org\",\"code\":31}}]",
+  "failedRequests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "eth_chainId",
+      "params": []
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "eth_getBlockByNumber",
+      "params": [
+        "0x18f1e7c",
+        false
+      ]
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "eth_getTransactionReceipt",
+      "params": [
+        "0xcdbb09627e10374f92eb9ce9c82dd6805692e7edc5d949d5d816585f25008ebc"
+      ]
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "eth_getCode",
+      "params": [
+        "0xd2aef07b4a807062c1c9f01713def52172548eca",
+        "0x18f1e7c"
+      ]
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "eth_getCode",
+      "params": [
+        "0x4bc05bda38e6e4a6158b5eeb825208c1f2380360",
+        "0x18f1e7c"
+      ]
+    }
+  ]
+}

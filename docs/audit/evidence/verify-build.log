@@ -1,0 +1,74 @@
+{
+  "Swarm": {
+    "abiCanonicalKeccak": "0x256e5c5caeb272a253f1a3b0a1aef5dd46f75db9194f26b92d52605ee3ef00fc",
+    "pinnedAbiHash": "0x256e5c5caeb272a253f1a3b0a1aef5dd46f75db9194f26b92d52605ee3ef00fc",
+    "abiMatches": true,
+    "creationCodeKeccak": "0x9f34b3913bdf902fcc6c9face93d70b711813af2354fcdad42575c98bbcf94a2",
+    "creationCodeMatchesPin": true,
+    "runtimeCodeKeccak": "0x8b30bc2136422339f303bd416bca9dc70645f4d6dbd20b792ab6e55a08a1a5bf",
+    "runtimeBytes": 2579,
+    "runtimeMatchesLocalExcludingImmutables": true,
+    "immutableValues": {
+      "50079": "0x000000000000000000000000ff03410d0fe5fa8f7f59f743de35e333d9857120",
+      "50081": "0x000000000000000000000000000000000004444c5dc75cb358380d2e3de08a90",
+      "50083": "0x0000000000000000000000000000000000000000000000000000000000000443"
+    },
+    "immutableValuesMatchGetters": true,
+    "sourcifyMatch": "match",
+    "runtimeMatchesSourcify": true,
+    "localAbiOrderMatchesSourcify": false,
+    "localAbiEntriesMatchSourcify": true,
+    "sourceMatches": {
+      "lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol": true,
+      "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": true,
+      "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": true,
+      "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": true,
+      "lib/openzeppelin-contracts/contracts/utils/Context.sol": true,
+      "src/Swarm.sol": true
+    },
+    "sourcifyCreationMatch": "match",
+    "sourcifyRuntimeMatch": "match",
+    "compiler": {
+      "language": "Solidity",
+      "compiler": "solc",
+      "compilerVersion": "0.8.26+commit.8a97fa7a",
+      "compilerSettings": {
+        "metadata": {
+          "bytecodeHash": "none"
+        },
+        "optimizer": {
+          "runs": 200,
+          "enabled": true
+        },
+        "evmVersion": "cancun",
+        "remappings": [
+          ":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+          ":forge-std/=lib/forge-std/src/",
+          ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+          ":solmate/=lib/solmate/",
+          ":v4-core/=lib/v4-core/"
+        ]
+      },
+      "name": "Swarm",
+      "fullyQualifiedName": "src/Swarm.sol:Swarm"
+    },
+    "constructorArguments": "0x000000000000000000000000ff03410d0fe5fa8f7f59f743de35e333d9857120000000000000000000000000000000000004444c5dc75cb358380d2e3de08a900000000000000000000000000000000000000000000000000000000000000443",
+    "verifiedAt": "2026-10-09T12:19:36Z"
+  },
+  "SwarmSwap": {
+    "abiCanonicalKeccak": "0x0a01dd50e61ea61d9e164bb4056b7299b152fa0d6e4cd2816581dc8a4eb109f9",
+    "pinnedAbiHash": "0x0a01dd50e61ea61d9e164bb4056b7299b152fa0d6e4cd2816581dc8a4eb109f9",
+    "abiMatches": true,
+    "creationCodeKeccak": "0x3ecac95e2705bed7bb7318c5aade6bd99509ecd8fbc2b72223dccd3a5289a5b8",
+    "creationCodeMatchesPin": true,
+    "runtimeCodeKeccak": "0x3d67deae8741be9eae28eb06c4a82fe2f9c8d3fce4450aa0b3f2f5e62e091776",
+    "runtimeBytes": 4343,
+    "runtimeMatchesLocalExcludingImmutables": true,
+    "immutableValues": {
+      "50326": "0x000000000000000000000000d2aef07b4a807062c1c9f01713def52172548eca",
+      "50329": "0x000000000000000000000000000000000004444c5dc75cb358380d2e3de08a90"
+    },
+    "immutableValuesMatchGetters": true,
+    "sourcifyMatch": null
+  }
+}

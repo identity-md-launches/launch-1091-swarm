@@ -1,0 +1,163 @@
+No files changed, compilation skipped
+
+Ran 20 tests for test/Swarm.t.sol:SwarmTest
+[PASS] testExpensiveButCorrectRegistryStillExemptsClaims() (gas: 481551)
+[PASS] testFuzzTransferConservesSupply(uint256) (runs: 256, μ: 236888, ~: 241370)
+[PASS] testInfiniteAllowanceAndRevocation() (gas: 301550)
+[PASS] testInsufficientBalanceRevertsAtomically() (gas: 253979)
+[PASS] testLaunchAndClaimArriveWhole() (gas: 229491)
+[PASS] testMetadataAndConstructorMint() (gas: 65284)
+[PASS] testNoMintOrAdministrativeEntryPoints() (gas: 448344)
+[PASS] testPoolManagerTransfersInBothDirectionsArriveWhole() (gas: 237198)
+[PASS] testRegistryFailureAndMalformedAddressDoNotFreezeTransfers() (gas: 759536)
+[PASS] testRejectsWrongChain() (gas: 33272)
+[PASS] testRejectsWrongFactoryAndMissingManager() (gas: 8239)
+[PASS] testRejectsZeroRecipientAndSpender() (gas: 123903)
+[PASS] testRoundingZeroAndSelfTransfers() (gas: 366739)
+[PASS] testRuntimeHasNoDelegatecallCallcodeOrSelfdestruct() (gas: 1032368)
+[PASS] testSelfTransferStillRequiresGrossBalance() (gas: 170736)
+[PASS] testThirdPartyCannotBorrowDistributorExemption() (gas: 231694)
+[PASS] testTransferBurnAndEvents() (gas: 242888)
+[PASS] testTransferFromSpendsGrossAllowance() (gas: 254928)
+[PASS] testTransfersToFactoryAndDistributorAreNotExempt() (gas: 247832)
+[PASS] testVoluntaryDeadTransferOnlyCountsAutomaticCharge() (gas: 187473)
+Suite result: ok. 20 passed; 0 failed; 0 skipped; finished in 38.10ms (35.79ms CPU time)
+
+Ran 12 tests for test/SwarmSwap.edges.t.sol:SwarmSwapEdgesTest
+[PASS] testBuySettlementMismatchRevertsWholeSwap() (gas: 568115)
+[PASS] testExactMinimumAndDeadlineEqualitySucceedWithAccurateEvent() (gas: 710513)
+[PASS] testFalseTransferReturnRevertsWholeSale() (gas: 551078)
+[PASS] testFuzzInvalidPoolBoundsAreRejectedByViewAndSwap(uint24,int24,bool) (runs: 1000, μ: 65958, ~: 64015)
+[PASS] testInputImmediatelyAboveInt128MaximumRejected() (gas: 226123)
+[PASS] testOneWeiSaleCannotConsumeInputForZeroOutput() (gas: 531547)
+[PASS] testRouterConstructorRejectsNonMainnet() (gas: 6345)
+[PASS] testSellSettlementMismatchRestoresAlreadyTransferredTokensAndAllowance() (gas: 721564)
+[PASS] testSellSlippageRollbackIncludesAllowancePriceLiquidityAndFeeGrowth() (gas: 704165)
+[PASS] testSellWithApprovalButNoTokensRevertsAndRestoresPool() (gas: 640201)
+[PASS] testSwapCannotSpendPreexistingRouterDonations() (gas: 502541)
+[PASS] testUninitializedPoolHasSpecificErrorAndDoesNotTrapETH() (gas: 300901)
+Suite result: ok. 12 passed; 0 failed; 0 skipped; finished in 64.16ms (61.27ms CPU time)
+
+Ran 8 tests for test/SwarmSwap.hooked.t.sol:SwarmSwapHookedPoolTest
+[PASS] testAdapterReadsAndTradesTheGuardedPool() (gas: 467248)
+[PASS] testFuzzGuardedRoundTripNeverCreatesValue(uint96) (runs: 500, μ: 399929, ~: 400088)
+[PASS] testGuardAddressCarriesOnlyTheBeforeInitializeFlag() (gas: 56965)
+[PASS] testGuardRefusesAStrangerOpeningTheLaunchKey() (gas: 70005)
+[PASS] testGuardedPoolSeedCannotBeRepeatedByTheAdapterCaller() (gas: 69881)
+[PASS] testHooklessKeyIsADifferentPoolThatAStrangerCanOpenAtAnyPrice() (gas: 667413)
+[PASS] testNeitherContractAcceptsPlainETH() (gas: 74060)
+[PASS] testWrongFeeTierUnderTheGuardIsNotTheLaunchPool() (gas: 98397)
+Suite result: ok. 8 passed; 0 failed; 0 skipped; finished in 223.61ms (192.87ms CPU time)
+
+Ran 12 tests for test/Swarm.edges.t.sol:SwarmEdgesTest
+[PASS] testAllExemptRolesStillNeedAllowanceAndGrossBalance() (gas: 547132)
+[PASS] testConstructorRejectsCodeAtDeadAndFactoryWithoutCode() (gas: 14875)
+[PASS] testFuzzApprovalOverwriteAndPartialSpending(uint256,uint256) (runs: 1000, μ: 494617, ~: 506150)
+[PASS] testFuzzConstructorRejectsEveryNonMainnetChain(uint64) (runs: 1000, μ: 33409, ~: 33410)
+[PASS] testFuzzInsufficientGrossAllowanceIsAtomic(uint256) (runs: 1000, μ: 291159, ~: 290973)
+[PASS] testFuzzOverdrawRollsBackBurnAndFiniteAllowance(uint256,uint256) (runs: 1000, μ: 349027, ~: 357477)
+[PASS] testFuzzSelfTransferFromChargesBurnAndGrossAllowance(uint256,bool) (runs: 1000, μ: 261734, ~: 266901)
+[PASS] testMaximumTransferAndTransferFromRevertWithoutOverflowOrStateChange() (gas: 447984)
+[PASS] testPinnedBurnBoundariesIncludingFullSupply() (gas: 1631025)
+[PASS] testRegistryUsesExactLaunchNumberAndRejectsShortOrDirtyResponses() (gas: 357802)
+[PASS] testZeroAddressesRemainInvalidForZeroAmountsAndApprovedTransfers() (gas: 368012)
+[PASS] testZeroTransferFromWithoutApprovalEmitsTransferAndChangesNothing() (gas: 190096)
+Suite result: ok. 12 passed; 0 failed; 0 skipped; finished in 695.28ms (693.56ms CPU time)
+
+Ran 1 test for test/Swarm.invariant.t.sol:SwarmInvariantTest
+[PASS] invariantSupplyAndBurnAccounting() (runs: 128, calls: 8192, reverts: 0)
+
+╭-----------------+--------------+-------+---------+----------╮
+| Contract        | Selector     | Calls | Reverts | Discards |
++=============================================================+
+| TransferHandler | transfer     | 4076  | 0       | 0        |
+|-----------------+--------------+-------+---------+----------|
+| TransferHandler | transferFrom | 4116  | 0       | 0        |
+╰-----------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 1.76s (1.76s CPU time)
+
+Ran 14 tests for test/SwarmSwap.t.sol:SwarmSwapTest
+[PASS] testBuyThenSellRoundTrip() (gas: 432593)
+[PASS] testCallbackCannotBeForged() (gas: 61570)
+[PASS] testCannotSellWithoutApprovalOrUseAnotherTradersApproval() (gas: 493898)
+[PASS] testETHRecipientCannotReenterSwap() (gas: 821297)
+[PASS] testExpiredSwap() (gas: 45748)
+[PASS] testFuzzRoundTripAndConservation(uint96) (runs: 256, μ: 402696, ~: 402837)
+[PASS] testInvalidAndUninitializedPoolsRevert() (gas: 99351)
+[PASS] testLaunchEconomicsAndOpeningPrice() (gas: 122024)
+[PASS] testMinimumOutputFailureRollsBackPoolAndBalances() (gas: 210029)
+[PASS] testPartialFillRevertsInsteadOfKeepingInput() (gas: 372275)
+[PASS] testPoolManagerPassThroughIsExemptAndDisclosed() (gas: 1093491)
+[PASS] testRejectingReceiverRollsBackSale() (gas: 847939)
+[PASS] testRejectsIncorrectValueZeroAndOversizedInput() (gas: 168981)
+[PASS] testWalletTransferAfterPurchaseBurns() (gas: 304929)
+Suite result: ok. 14 passed; 0 failed; 0 skipped; finished in 97.02ms (96.95ms CPU time)
+
+Ran 7 tests for test/Swarm.lookupBudget.t.sol:SwarmLookupBudgetTest
+[PASS] testDeploymentUnderTheBudgetedRegistry() (gas: 39193)
+[PASS] testFuzzLookupInsideTheBudgetExemptsClaimsAndTaxesOrdinaryTransfers(uint256) (runs: 1000, μ: 380649, ~: 367096)
+[PASS] testFuzzLookupOverTheBudgetSilentlyTaxesClaims(uint256) (runs: 1000, μ: 505912, ~: 505956)
+[PASS] testFuzzScarceClaimGasNeverTurnsAClaimIntoATaxedTransfer(uint256,uint256) (runs: 1000, μ: 210073, ~: 206541)
+[PASS] testPinnedBudgetEdges() (gas: 897369)
+[PASS] testRegistryAnsweringZeroDistributorGrantsNothing() (gas: 184249)
+[PASS] testTightClaimGasRevertsWholeAndGenerousClaimGasSucceedsWhole() (gas: 302507)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 1.23s (1.29s CPU time)
+
+Ran 2 tests for test/SwarmSwap.invariant.t.sol:SwarmMarketInvariantTest
+[PASS]
+SwarmMarketInvariantTest invariants:
+[PASS] invariantMarketConservesETHAndTokensWithoutRouterCustody
+[PASS] invariantPoolSettlesExactInputsAndOutputsAndOnlyWalletTransfersBurn
+ SwarmMarketInvariantTest invariants (runs: 256, calls: 24576, reverts: 0)
+
+╭--------------------+---------------------+-------+---------+----------╮
+| Contract           | Selector            | Calls | Reverts | Discards |
++=======================================================================+
+| SwarmMarketHandler | buy                 | 4085  | 0       | 0        |
+|--------------------+---------------------+-------+---------+----------|
+| SwarmMarketHandler | rejectSlippage      | 3962  | 0       | 0        |
+|--------------------+---------------------+-------+---------+----------|
+| SwarmMarketHandler | revokeAndRejectSale | 4107  | 0       | 0        |
+|--------------------+---------------------+-------+---------+----------|
+| SwarmMarketHandler | roundTrip           | 4049  | 0       | 0        |
+|--------------------+---------------------+-------+---------+----------|
+| SwarmMarketHandler | sell                | 4250  | 0       | 0        |
+|--------------------+---------------------+-------+---------+----------|
+| SwarmMarketHandler | walletTransfer      | 4123  | 0       | 0        |
+╰--------------------+---------------------+-------+---------+----------╯
+
+[PASS] testHandlerExercisesInterleavedTradesFailuresAndBurns() (gas: 1679805)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 12.06s (12.06s CPU time)
+
+Ran 2 tests for test/Swarm.accounting.invariant.t.sol:SwarmAccountingInvariantTest
+[PASS]
+SwarmAccountingInvariantTest invariants:
+[PASS] invariantBurnCounterAndSinkIncludeExactlyTheirRespectiveReceipts
+[PASS] invariantIndividualBalancesAndAllowancesMatchIndependentLedger
+ SwarmAccountingInvariantTest invariants (runs: 256, calls: 24576, reverts: 0)
+
+╭------------------------+---------------------+-------+---------+----------╮
+| Contract               | Selector            | Calls | Reverts | Discards |
++===========================================================================+
+| SwarmAccountingHandler | approve             | 3071  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | claim               | 3101  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | invalidRecipient    | 3058  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | overdraw            | 3122  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | spendAllowance      | 3045  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | transfer            | 3054  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | transferFullBalance | 3076  | 0       | 0        |
+|------------------------+---------------------+-------+---------+----------|
+| SwarmAccountingHandler | unauthorizedSpend   | 3049  | 0       | 0        |
+╰------------------------+---------------------+-------+---------+----------╯
+
+[PASS] testHandlerExercisesAllowanceLifecycleAndFailureRollback() (gas: 1460018)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 14.56s (14.56s CPU time)
+
+Ran 9 test suites in 14.56s (30.73s CPU time): 78 tests passed, 0 failed, 0 skipped (78 total tests)

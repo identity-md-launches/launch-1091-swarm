@@ -1,0 +1,14 @@
+HTTP/2 200 
+date: Fri, 09 Oct 2026 18:32:58 GMT
+content-type: application/json
+access-control-allow-origin: *
+vary: Accept-Encoding
+x-drpc-owner-id: cb501251-31a8-4028-8b0a-54679f15c385
+x-drpc-owner-tier: free
+x-drpc-trace-id: 58ce7ee08685c6f87e588f996d72b444
+strict-transport-security: max-age=31536000; includeSubDomains
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: a47f78985c4c3879-EWR
+alt-svc: h3=":443"; ma=86400
+

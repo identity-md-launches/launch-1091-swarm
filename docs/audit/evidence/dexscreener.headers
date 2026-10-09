@@ -1,0 +1,16 @@
+HTTP/2 200 
+date: Fri, 09 Oct 2026 18:32:58 GMT
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=mELZHNJobwSe0FRiHBd40O0sbu6w_3jjtbD8mEnClpo-1791570778.7577047-1.0.1.1-YWNtpOuVpTfAdv5xTBx6KC5OeE7QJiQ9OMzjAvLkAHT8fWSfLoIdgDQBEsTq3LQlqSb3OoU_UEAh3QpaUj0oL6rSFo4JQJTJstNNe9rypds_lSEu5waUwj2TaEf7exn_rh_xCFgbc1dbjNeUMNlZWw; HttpOnly; SameSite=None; Secure; Path=/; Domain=dexscreener.com; Expires=Fri, 09 Oct 2026 19:02:58 GMT
+access-control-allow-origin: *
+access-control-allow-credentials: true
+etag: W/"26-7mwYuLXLx12A5Iw2GRHUJ6cXxlk"
+vary: Accept-Encoding
+vary: Accept-Encoding
+expires: Fri, 09 Oct 2026 18:33:28 GMT
+cache-control: public, max-age=30
+cf-cache-status: REVALIDATED
+server: cloudflare
+cf-ray: a47f789739a1f8a7-EWR
+alt-svc: h3=":443"; ma=86400
+

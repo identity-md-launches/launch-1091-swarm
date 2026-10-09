@@ -1,0 +1,15 @@
+HTTP/2 200 
+x-content-type-options: nosniff
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+access-control-allow-origin: *
+date: Fri, 09 Oct 2026 18:32:58 GMT
+expires: Fri, 09 Oct 2026 18:32:58 GMT
+cache-control: private, max-age=1799
+content-type: application/json; charset=UTF-8
+server: HTTP server (unknown)
+x-xss-protection: 0
+x-frame-options: SAMEORIGIN
+alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+accept-ranges: none
+vary: Accept-Encoding
+

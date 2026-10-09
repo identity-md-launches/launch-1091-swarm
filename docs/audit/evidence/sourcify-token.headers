@@ -1,0 +1,14 @@
+HTTP/2 200 
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
+etag: W/"29bbc-W18vyo2HCarnjPl/or/YaK49TvU"
+x-cloud-trace-context: b95c275e5529c3685475df71183b4826
+date: Fri, 09 Oct 2026 18:32:58 GMT
+server: Google Frontend
+content-length: 170940
+via: 1.1 google
+vary: Accept-Encoding
+cache-control: public,max-age=3600
+alt-svc: h3=":443"; ma=2592000
+

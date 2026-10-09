@@ -1,0 +1,104 @@
+{
+  "checkedAt": "2026-10-09T18:50:01.431Z",
+  "url": "https://swarm.sites.imd.fun/",
+  "httpStatus": 200,
+  "hostCid": "bafybeid3t2wvhqu6xb55dtbgmtdk2enyniinucfbd2juqltwaaohg5dceq",
+  "title": "SwarmSwap · SWARM on Ethereum",
+  "metadata": {
+    "canonical": null,
+    "ogUrl": null,
+    "ogImage": null,
+    "headerLogo": "https://swarm.sites.imd.fun/assets/logo.svg",
+    "manifest": "./manifest.webmanifest"
+  },
+  "sell": {
+    "symbol": "SWARM",
+    "logo": "https://swarm.sites.imd.fun/assets/logo.svg",
+    "visible": true
+  },
+  "buy": {
+    "symbol": "SWARM",
+    "logo": "https://swarm.sites.imd.fun/assets/logo.svg",
+    "visible": true
+  },
+  "assets": {
+    "logo.svg": {
+      "httpStatus": 200,
+      "sha256": "b1a82283bc66c1e0870c4ea77a5287c22de12af83deec9580fed581fbd67fe02",
+      "bytes": 5310,
+      "equalsLocal": true
+    },
+    "logo.png": {
+      "httpStatus": 200,
+      "sha256": "1340467fb73bfb15e2fd6ebfe79f4615e02554d2bf29095029c54ae89c589e40",
+      "bytes": 121177,
+      "equalsLocal": true
+    }
+  },
+  "manifest": {
+    "name": "SwarmSwap",
+    "short_name": "SWARM",
+    "description": "Trade SWARM with native ETH on Ethereum mainnet.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#0b0f14",
+    "theme_color": "#0b0f14",
+    "icons": [
+      {
+        "src": "./assets/logo.svg",
+        "sizes": "any",
+        "type": "image/svg+xml",
+        "purpose": "any"
+      },
+      {
+        "src": "./assets/logo.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ],
+    "related_contracts": [
+      {
+        "name": "Swarm",
+        "symbol": "SWARM",
+        "chainId": 1,
+        "address": "0xd2aef07b4a807062c1c9f01713def52172548eca"
+      },
+      {
+        "name": "SwarmSwap",
+        "chainId": 1,
+        "address": "0x4bc05bda38e6e4a6158b5eeb825208c1f2380360"
+      }
+    ]
+  },
+  "tokenList": {
+    "name": "SWARM official token list",
+    "timestamp": "2026-10-09T00:00:00Z",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    },
+    "keywords": [
+      "swarm",
+      "swarmswap"
+    ],
+    "logoURI": "./assets/logo.png",
+    "tokens": [
+      {
+        "chainId": 1,
+        "address": "0xd2aef07b4a807062c1c9f01713def52172548eca",
+        "name": "swarm",
+        "symbol": "SWARM",
+        "decimals": 18,
+        "logoURI": "./assets/logo.png",
+        "extensions": {
+          "logoSvgURI": "./assets/logo.svg",
+          "swapAdapter": "0x4bc05bda38e6e4a6158b5eeb825208c1f2380360",
+          "sourceCommit": "a90f7546492326d5f6a43b04cf685124063ac858"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "swarm-listing-handoff-v1",
+  "status": "draft_not_submitted",
+  "preparedAt": "2026-10-09",
+  "scope": "Project worksheet, not an indexer API schema or proof of approval.",
+  "project": {
+    "name": "swarm",
+    "symbol": "SWARM",
+    "displaySymbol": "$SWARM",
+    "chainId": 1,
+    "chain": "ethereum",
+    "contractAddress": "0xd2aef07b4a807062c1c9f01713def52172548eca",
+    "checksumAddress": "0xd2aEF07B4A807062C1C9f01713def52172548ECA",
+    "decimals": 18,
+    "totalSupplyBaseUnits": "1000000000000000000000000000",
+    "totalSupplyTokens": "1000000000",
+    "circulatingSupply": null,
+    "description": "Fixed-supply Ethereum token with one constructor mint and a 1% sink charge on ordinary transfers. Factory, distributor and PoolManager paths are exempt. SwarmSwap supports native ETH/SWARM swaps."
+  },
+  "endpoints": {
+    "website": "https://swarm.sites.imd.fun/",
+    "dapp": "https://swarm.sites.imd.fun/",
+    "repository": "https://github.com/identity-md-launches/launch-1091-swarm",
+    "explorer": "https://etherscan.io/token/0xd2aef07b4a807062c1c9f01713def52172548eca",
+    "svgLogo": "https://swarm.sites.imd.fun/assets/logo.svg",
+    "pngLogo512": "https://swarm.sites.imd.fun/assets/logo.png",
+    "gatewayRelativeTokenList": "./swarm.tokenlist.json",
+    "sourceVerification": "https://sourcify.dev/server/v2/contract/1/0xd2aef07b4a807062c1c9f01713def52172548eca?fields=all"
+  },
+  "assets": {
+    "svg": {
+      "repositoryPath": "assets/logo.svg",
+      "url": "https://swarm.sites.imd.fun/assets/logo.svg",
+      "sha256": "b1a82283bc66c1e0870c4ea77a5287c22de12af83deec9580fed581fbd67fe02",
+      "bytes": 5310,
+      "mediaType": "image/svg+xml"
+    },
+    "png": {
+      "repositoryPath": "assets/logo.png",
+      "url": "https://swarm.sites.imd.fun/assets/logo.png",
+      "sha256": "1340467fb73bfb15e2fd6ebfe79f4615e02554d2bf29095029c54ae89c589e40",
+      "bytes": 121177,
+      "mediaType": "image/png",
+      "width": 512,
+      "height": 512
+    }
+  },
+  "hosting": {
+    "pinnedHostedName": "swarm.site.identitymd.eth",
+    "observedDomain": "https://swarm.sites.imd.fun/",
+    "observedPreviousCid": "bafybeid3t2wvhqu6xb55dtbgmtdk2enyniinucfbd2juqltwaaohg5dceq",
+    "cidEvidence": "Live x-ipfs-cid response header matches pinned project record. No independent IPFS block verification.",
+    "updatedExportCid": null,
+    "updatedExportPublished": false
+  },
+  "evidence": {
+    "snapshotBlock": 26156668,
+    "snapshotBlockHash": "0xd0ae562e9af5638f767a52d8bf56a3c94bc5a50b58624c24b1afa034934b43e9",
+    "sourceCommit": "a90f7546492326d5f6a43b04cf685124063ac858",
+    "totalBurnedTokensAtSnapshot": "10000",
+    "totalBurnedBaseUnitsAtSnapshot": "10000000000000000000000",
+    "liquidityLockStatus": "not_verified",
+    "etherscanVerificationStatus": "not_confirmed_http_403",
+    "sourcifyTokenCreationMatch": "match",
+    "sourcifyTokenRuntimeMatch": "match"
+  },
+  "operatorFields": {
+    "applicantName": null,
+    "contactEmail": null,
+    "officialSocialUrls": [],
+    "whitepaperUrl": null,
+    "liquidityLockEvidence": null,
+    "circulatingSupplyMethodology": null
+  },
+  "submissions": [
+    {
+      "provider": "Etherscan",
+      "status": "prepared_not_submitted",
+      "workflow": "https://info.etherscan.com/how-to-update-token-information-on-token-page/",
+      "formFields": {
+        "contractAddress": "0xd2aEF07B4A807062C1C9f01713def52172548ECA",
+        "projectName": "swarm",
+        "website": "https://swarm.sites.imd.fun/",
+        "logo": "https://swarm.sites.imd.fun/assets/logo.png",
+        "description": "Fixed-supply Ethereum token with one constructor mint and a 1% sink charge on ordinary transfers. Factory, distributor and PoolManager paths are exempt. SwarmSwap supports native ETH/SWARM swaps."
+      },
+      "requirementsToResolve": [
+        "Establish authorized account/address-ownership proof for the factory-deployed token.",
+        "Confirm Etherscan source verification and the current image/form rules.",
+        "Provide authorized applicant contact and relevant official social URLs."
+      ]
+    },
+    {
+      "provider": "CoinGecko",
+      "status": "prepared_not_submitted",
+      "workflow": "https://support.coingecko.com/hc/en-us/articles/7291312302617-How-to-List-a-New-Cryptocurrency-on-CoinGecko",
+      "formFields": {
+        "platform": "ethereum",
+        "contractAddress": "0xd2aEF07B4A807062C1C9f01713def52172548ECA",
+        "name": "swarm",
+        "symbol": "SWARM",
+        "website": "https://swarm.sites.imd.fun/",
+        "logo": "https://swarm.sites.imd.fun/assets/logo.png",
+        "description": "Fixed-supply Ethereum token with one constructor mint and a 1% sink charge on ordinary transfers. Factory, distributor and PoolManager paths are exempt. SwarmSwap supports native ETH/SWARM swaps.",
+        "existingCoinId": null,
+        "trackedMarketUrl": null
+      },
+      "requirementsToResolve": [
+        "Confirm actively tradable market on an exchange tracked by CoinGecko.",
+        "Provide authorized applicant contact and circulating-supply method.",
+        "Check whether an exact-contract listing already exists; never select another SWARM by symbol alone."
+      ]
+    },
+    {
+      "provider": "DexScreener",
+      "status": "no_pairs_returned_at_check",
+      "workflow": "https://docs.dexscreener.com/token-listing",
+      "discoveryQuery": "https://api.dexscreener.com/latest/dex/tokens/0xd2aef07b4a807062c1c9f01713def52172548eca",
+      "discoveryResponse": {
+        "schemaVersion": "1.0.0",
+        "pairs": null
+      },
+      "formFields": {
+        "chainId": "ethereum",
+        "tokenAddress": "0xd2aEF07B4A807062C1C9f01713def52172548ECA",
+        "website": "https://swarm.sites.imd.fun/",
+        "imageUrl": "https://swarm.sites.imd.fun/assets/logo.png",
+        "description": "Fixed-supply Ethereum token with one constructor mint and a 1% sink charge on ordinary transfers. Factory, distributor and PoolManager paths are exempt. SwarmSwap supports native ETH/SWARM swaps.",
+        "indexedPairUrl": null
+      },
+      "requirementsToResolve": [
+        "Confirm indexing support/discovery for this Uniswap v4 pool.",
+        "Choose an accepted metadata route and establish authorized project control."
+      ]
+    },
+    {
+      "provider": "TrustWallet Assets Repository",
+      "status": "prepared_requires_asset_and_eligibility_review",
+      "workflow": "https://developer.trustwallet.com/developer/new-asset",
+      "repository": "https://github.com/trustwallet/assets",
+      "targetDirectory": "blockchains/ethereum/assets/0xd2aEF07B4A807062C1C9f01713def52172548ECA/",
+      "files": {
+        "logo.png": {
+          "source": "assets/logo.png",
+          "currentBytes": 121177,
+          "documentedMaximumBytes": 100000,
+          "ready": false,
+          "reason": "Official 512x512 PNG exceeds the documented 100 kB limit. Preserve the original and prepare an approved optimized submission variant."
+        },
+        "info.json": {
+          "draft": {
+            "name": "swarm",
+            "type": "ERC20",
+            "symbol": "SWARM",
+            "decimals": 18,
+            "website": "https://swarm.sites.imd.fun/",
+            "description": "Fixed-supply Ethereum token with one constructor mint and a 1% sink charge on ordinary transfers. Factory, distributor and PoolManager paths are exempt. SwarmSwap supports native ETH/SWARM swaps.",
+            "explorer": "https://etherscan.io/token/0xd2aef07b4a807062c1c9f01713def52172548eca",
+            "id": "0xd2aEF07B4A807062C1C9f01713def52172548ECA",
+            "links": [
+              {
+                "name": "github",
+                "url": "https://github.com/identity-md-launches/launch-1091-swarm"
+              }
+            ]
+          },
+          "missingRequiredDecisions": [
+            "status after eligibility/activity review"
+          ]
+        }
+      },
+      "requirementsToResolve": [
+        "Verify token eligibility and current submission terms.",
+        "Optimize an approved image below 100 kB; recommended 256x256, maximum 512x512.",
+        "Inspect circular-mask and light/dark appearance.",
+        "Submit only through an authorized operator; no payment or PR made here."
+      ]
+    }
+  ]
+}

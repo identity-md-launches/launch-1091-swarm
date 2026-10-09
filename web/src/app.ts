@@ -5,6 +5,7 @@ import {
 } from "./rpc.ts";
 import logoSvg from "../../assets/logo.svg";
 import logoPng from "../../assets/logo.png";
+import { deployedCode } from "./deployed-code.ts";
 
 interface Eip1193Provider {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>;
@@ -68,6 +69,8 @@ function renderToken(prefix: "pay" | "receive", key: keyof typeof tokens) {
 function syncSelector() {
   renderToken("pay", isBuy() ? "ETH" : "SWARM");
   renderToken("receive", isBuy() ? "SWARM" : "ETH");
+  $("pay-token").dataset.contract = isBuy() ? "native:ETH" : config.token ?? "";
+  $("receive-token").dataset.contract = isBuy() ? config.token ?? "" : "native:ETH";
 }
 
 function controls() {
@@ -126,6 +129,12 @@ async function refreshStats() {
   validateConfig(config);
   if (BigInt(await readRpc("eth_chainId") as string) !== 1n) throw new Error("The configured connection is not Ethereum mainnet.");
   const block = await readRpc("eth_blockNumber") as string;
+  const [tokenCode, swapCode] = await Promise.all([
+    readRpc("eth_getCode", [config.token, block]), readRpc("eth_getCode", [config.swap, block]),
+  ]);
+  if (tokenCode !== deployedCode.token || swapCode !== deployedCode.swap) {
+    throw new Error("Contract code differs from the reviewed deployment. Trading is unavailable.");
+  }
   const [name, symbol, decimals, supply, burned, state, swapToken, swapManager, manager] = await Promise.all([
     call(config.token, "name", [], block), call(config.token, "symbol", [], block), call(config.token, "decimals", [], block),
     call(config.token, "totalSupply", [], block), call(config.token, "totalBurned", [], block),
@@ -173,6 +182,17 @@ async function send(tx: Transaction): Promise<string> {
 
 async function review(event: Event) {
   event.preventDefault();
+  if (busy || !ready) return;
+  let amount: bigint;
+  try { amount = parseAmount(amountInput.value.trim()); }
+  catch (error) {
+    invalidate();
+    amountInput.setAttribute("aria-invalid", "true");
+    message("amount-error", error instanceof Error ? error.message : "Enter a positive amount.", true);
+    $("amount-error").hidden = false;
+    amountInput.focus();
+    return;
+  }
   await action(async () => {
     invalidate();
     validateConfig(config);
@@ -180,7 +200,6 @@ async function review(event: Event) {
     await checkWallet();
     const actionEpoch = epoch;
     const trader = account as string;
-    const amount = parseAmount(amountInput.value.trim());
     const buy = isBuy();
     if (!buy) {
       const allowance = uintAt(await call(config.token, "allowance", [trader, config.swap]));
@@ -244,6 +263,7 @@ async function action(fn: () => Promise<void>) {
 }
 
 function installBranding() {
+  $<HTMLAnchorElement>("download-logo").href = logoPng;
   for (const image of document.querySelectorAll<HTMLImageElement>("img[data-logo]")) {
     image.src = image.dataset.logo === "png" ? logoPng : logoSvg;
   }
@@ -257,6 +277,8 @@ connectButton.addEventListener("click", () => action(connect));
 $<HTMLFormElement>("swap-form").addEventListener("submit", (event) => { void review(event); });
 executeButton.addEventListener("click", () => { void execute(); });
 for (const control of [amountInput, directionSelect, slippageSelect]) control.addEventListener("input", () => {
+  amountInput.removeAttribute("aria-invalid");
+  $("amount-error").hidden = true;
   invalidate();
   syncSelector();
   if (ready) message("swap-status", "Review your trade for a fresh quote.");
@@ -271,14 +293,34 @@ for (const event of ["accountsChanged", "chainChanged"]) window.ethereum?.on?.(e
 });
 
 async function update() {
-  try { await refreshStats(); if (!account && !busy) message("swap-status", "Connect your wallet to trade."); }
+  const retry = $<HTMLButtonElement>("retry");
+  retry.disabled = true;
+  try {
+    await refreshStats(); retry.hidden = true;
+    if (!account && !busy) message("swap-status", "Connect your wallet to trade.");
+  }
   catch (error) {
     ready = false; invalidate();
     $("price").textContent = "—";
     $("burned").textContent = "—";
     message("data-status", error instanceof Error ? error.message : "Unable to read the token. Try again later.", config.token !== null);
+    message("burn-note", "Unavailable · retry the connection");
+    message("swap-status", "Trading is unavailable while chain data cannot be verified. Retry the connection.", true);
+    retry.hidden = false;
   }
+  finally { retry.disabled = false; }
 }
+
+$<HTMLButtonElement>("retry").addEventListener("click", () => { void update(); });
+$<HTMLButtonElement>("copy-address").addEventListener("click", async () => {
+  if (!config.token) return;
+  try {
+    await navigator.clipboard.writeText(config.token);
+    message("copy-status", "Contract address copied.");
+  } catch {
+    message("copy-status", "Copy is unavailable. Select and copy the full address above.", true);
+  }
+});
 
 installBranding();
 syncSelector();

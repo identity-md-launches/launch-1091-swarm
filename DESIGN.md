@@ -1,144 +1,165 @@
-# SwarmSwap design system
-
-Documents the implemented design of the SWARM website as it exists in `web/` after the
-branding job. Values are taken from the source files named below, not from a mock-up.
-Rendered observations come from the scripted Chromium checks recorded in
-`artifacts/validation.md`; anything not listed there is unverified.
+# SwarmSwap — implemented design
 
 ## Overview
 
-One static page, built with Vite from `web/index.html`, `web/src/style.css` and
-`web/src/app.ts`, exported to `dist/` with relative URLs. The brand is a dark ground with
-two neon accents taken from the logo: gold for the one filled action and headline
-emphasis, cyan for focus, links and live signals. The official mark lives in
-`assets/logo.svg` (source of truth) and `assets/logo.png` (512×512 raster made from the
-SVG); both are bundled into `dist/assets/` under those exact names.
+A static Ethereum token application with a launch-record section for holders,
+reviewers and listing operators. The existing dark, gold and cyan bee branding
+is retained. `web/index.html` provides the document, `web/src/style.css` the
+shared tokens/components, and `web/src/app.ts` the interactions. Vite exports
+`dist/` with relative runtime resources. There is no component framework or
+external font service.
+
+The page moves from overview to live token statistics and swap, transfer rules,
+and the evidence record. Same-page navigation makes the report directly
+reachable. The report marks source evidence, live observations and pending
+confirmations explicitly; a neutral Draft badge does not imply certification.
+The official unchanged artwork is `assets/logo.svg` and `assets/logo.png`.
 
 ## Colors
 
-All tokens are declared once on `:root` in `web/src/style.css`. Components reference
-semantic tokens only; primitives are named by hue and step.
+Canonical token definitions are at `web/src/style.css:2`. The existing hex
+primitives and role aliases are retained; isolated inherited glow/image-outline
+values are not a separate theme. Only a dark theme is implemented.
 
-| Semantic token | Primitive | Value | Role |
-| --- | --- | --- | --- |
-| `--color-bg` | `--ink-950` | `#0b0f14` | Page background (plus a cyan radial glow on `body`) |
-| `--color-surface` | `--ink-900` | `#121a23` | Swap card, token chips |
-| `--color-surface-raised` | `--ink-800` | `#182330` | Amount box, selects |
-| `--color-line` | `--ink-700` | `#27354a` | Structural dividers and section borders (decorative) |
-| `--color-line-control` | `--ink-600` | `#5b6f90` | Borders of controls: selects, chips, outlined button |
-| `--color-text` | `--gray-100` | `#eef3f8` | Primary text |
-| `--color-text-secondary` | `--gray-300` | `#a6b3c2` | Labels, captions, body copy |
-| `--color-text-placeholder` | `--ink-400` | `#8392a6` | Input placeholder |
-| `--color-accent` | `--gold-500` | `#f5c518` | Filled primary action, brand name, headline emphasis, pool share bar |
-| `--color-accent-hover` | `--gold-400` | `#ffd84d` | Primary action hover |
-| `--color-on-accent` | `--gold-950` | `#1a1400` | Text on gold or cyan fills |
-| `--color-signal` | `--cyan-400` | `#19e6ff` | Eyebrows, links, live dot, pill, confirm button fill |
-| `--color-focus` | `--cyan-400` | `#19e6ff` | 3px focus ring, 4px offset, on every focusable element |
-| `--color-error` | `--red-300` | `#ff9b8f` | Error text in status regions (always paired with the message text) |
+| Semantic token | Exact value | Use |
+| --- | --- | --- |
+| `--color-bg` | `#0b0f14` | Page; body also has a cyan radial glow near the top |
+| `--color-surface` | `#121a23` | Swap/record cards, address strip, token chips |
+| `--color-surface-raised` | `#182330` | Input and select surfaces |
+| `--color-line` | `#27354a` | Decorative dividers and structural card borders |
+| `--color-line-control` | `#5b6f90` | Outlined button/select boundaries |
+| `--color-text` | `#eef3f8` | Main text, headings and values |
+| `--color-text-secondary` | `#a6b3c2` | Descriptions, labels, captions |
+| `--color-text-placeholder` | `#8392a6` | Amount placeholder |
+| `--color-accent` | `#f5c518` | Gold primary action, brand wordmark and headline |
+| `--color-accent-hover` | `#ffd84d` | Gold action hover |
+| `--color-on-accent` | `#1a1400` | Text on gold/cyan actions |
+| `--color-signal` / `--color-focus` | `#19e6ff` | Links, focus rings, live signal; confirm action |
+| `--color-error` | `#ff9b8f` | Explicit error messages |
 
-Measured WCAG 2 contrast for the declared pairs (`test/scratch` script, recorded in
-`artifacts/validation.md`): primary text on background 17.2:1, secondary text on
-background 9.0:1 and on the card 8.2:1, gold on background 11.8:1, dark text on gold
-11.3:1 and on cyan 12.1:1, cyan on background 12.6:1 and on the card 11.5:1, error on
-card 8.6:1, placeholder on the amount box 5.0:1, control borders 3.1–3.8:1 against
-every surface they sit on. Structural `--color-line` dividers are 1.55:1 and are
-intentionally decorative. There is no light theme; `color-scheme: dark` is declared.
-
-Rules: one filled gold action per view (`Review swap`; `Confirm swap` replaces it and is
-cyan-filled so the second step reads as a different, final action). Cyan on static text
-is limited to eyebrows and the brand caption. Selection uses gold with dark text.
+The report's rendered WCAG 2 pairs were measured in Chromium: primary text/card
+**15.71:1**, secondary text/card **8.22:1**, cyan link/card **11.53:1**, dark text/gold
+button **11.26:1**, and draft-label text/page **9.01:1**. These apply to those
+identified solid backgrounds, not all states or gradient/image regions.
+The evidence JSON retains the measured RGB pairs. Color never carries status
+alone: “Draft”, “Not verified”, errors and pending checks also appear in text.
 
 ## Typography
 
-- Family: `Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`.
-  No font files ship; Inter is used only if installed, so the rendered face is the
-  platform's system sans. Root sets antialiased smoothing.
-- Scale (`:root`): `--text-xs` 12px, `--text-sm` 13px, `--text-base` 16px, `--text-md` 17px,
-  `--text-lg` 24px, `--text-xl` clamp(36px, 5vw, 56px), `--text-display` clamp(48px, 6.5vw, 88px).
-- Roles: `h1` display size, weight 600, line-height 1.03, letter-spacing −0.04em;
-  `h2` `--text-xl`, weight 600, line-height 1.05; `h3` `--text-lg`, weight 600; body and
-  lede 16–17px at line-height 1.65–1.8; labels and captions 12–13px; eyebrows 12px
-  uppercase with 0.18em tracking. Measured heading sizes descend at every width checked
-  (88/56/24px desktop, 48/36/24px at 375px and 320px).
-- Numbers: stats, the amount input, quotes and the block status use
-  `font-variant-numeric: tabular-nums`. Long values use `overflow-wrap: anywhere` as a
-  last resort; below 36rem the stats become one column so values never break mid-digit.
-- Wrapping: headings `text-wrap: balance`, paragraphs `text-wrap: pretty`, badges and chips
-  `white-space: nowrap`. Long-form paragraphs in `.details` are capped at `65ch`.
-- Inputs: the amount field is 32px (24px under 36rem) and selects are 16px, so iOS never
-  zooms on focus.
+The font stack is `Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+Arial, sans-serif`. No Inter font is bundled; the system fallback is expected.
+Exact platform font identity and all synthesized weights were not separately
+audited. Root smoothing is enabled.
+
+The source scale is: `--text-xs` .75rem, `--text-sm` .8125rem, `--text-base` 1rem,
+`--text-md` 1.0625rem, `--text-lg` 1.5rem, `--text-xl`
+`clamp(2.25rem, 5vw, 3.5rem)`, and `--text-display`
+`clamp(3rem, 6.5vw, 5.5rem)`. At the default 16px root these are 12, 13, 16, 17,
+24, 36–56 and 48–88px.
+
+- Hero h1: 600, line-height 1.03, −.04em tracking. In a content container up to
+  25rem it uses `clamp(2.5rem, 12cqi, 3rem)` to retain readable short lines.
+- Trade/report h2: 600, the XL scale, about 1.05/1.1 line-height, −.03em tracking.
+  The transfer-rules h2 is a quieter 1.5rem.
+- Card h3: 1.25rem/1.3, weight 600; download heading: 1.5rem/1.3.
+- Report prose: 1rem, line-height 1.6–1.65, capped at 60–70ch where appropriate.
+  Existing compact transfer details use .8125rem/1.8.
+- Eyebrows: .75rem, 700, uppercase, .18em tracking. Card index tracking is .12em.
+- Stats, quote amounts, block numbers and report values use tabular numerals.
+- Full addresses use monospace and `overflow-wrap: anywhere`, without truncation.
+  Heading balance and paragraph pretty wrapping are used throughout.
+- Amount input: 2rem, falling to 1.5rem at the small viewport breakpoint.
+  Selects stay at 1rem; fields have persistent labels.
 
 ## Layout
 
-- Content width `77.5rem` (1240px) centered; side margins step down at the breakpoints
-  `82.5rem` (2.5rem), `50rem` (1.375rem) and `36rem` (1rem). Logical properties
-  (`margin-inline`, `padding-inline-start`, `border-inline-end`) are used throughout.
-- Spacing steps `--space-1` … `--space-10` (4px to 64px). Groups are separated by space
-  first; dividers appear only on the stats band, section tops and the footer.
-- Sections: `.hero` is a 1.35fr/1fr grid (text, logo figure) that stacks at 36rem;
-  `.stats` is four columns, two under 50rem, one under 36rem; `.trade-section` is two
-  equal columns (copy, swap card) that stack at 36rem; `.details` is two text columns
-  that stack at 36rem. Hidden at small widths: the network label under 50rem, the
-  footer tagline under 36rem; at 22.5rem the header wordmark is visually hidden but
-  stays in the accessible name.
-- Observed in Chromium: no horizontal overflow at 1366, 820, 375 and 320px widths.
-  Widths between those points, native 200% zoom and RTL were not checked.
+Main/header/footer have a 77.5rem maximum width. Side margins are 2.5rem below
+82.5rem viewport width, 1.375rem below 50rem and 1rem below 36rem. Spacing tokens
+are .25, .5, .75, 1, 1.5, 2, 3 and 4rem. Logical margin/padding properties retain
+consistent leading/trailing edges. Header and navigation wrap in normal flow.
+
+The existing hero begins at 1.35fr/1fr, statistics at four columns, swap and
+transfer details at two. Viewport rules reduce stats to two columns at 50rem and
+one at 36rem; the small viewport also stacks hero/trade/details. The network
+label is hidden below 50rem, footer tagline below 36rem, and the small header
+wordmark is visually hidden below 22.5rem while remaining accessible.
+
+`main` is additionally an inline-size container. At a **48rem content width**,
+hero/trade/details stack and the stats and record facts use auto-fit columns with
+13rem minimums bounded by 100%. These container thresholds track enlarged text,
+which fixed viewport breakpoints alone did not. Below **25rem content width**,
+form rows, allocation labels and the amount box wrap, and the download action
+can fill the available width.
+
+The report has three equal `minmax(0, 1fr)` cards with 1.5rem gaps. At 62rem
+viewport width they become one column, with fact lists initially in three
+columns. The container rules collapse facts as text grows. The address strip
+wraps its copy action without hiding the address. The download row wraps and
+stacks under 50rem; prose and actions have no fixed text heights.
+
+Rendered checks covered 1440, 820, 576, 375 and 320 CSS px, plus 200% root text
+enlargement at 820px. All final checks showed no horizontal overflow. Native
+browser zoom, RTL and physical devices were not tested.
 
 ## Elevation & depth
 
-Flat surfaces with one lifted card. The swap card has a 1px structural border plus
-`0 1.5rem 3rem #00000055` and a faint cyan 1px glow. The hero logo carries a cyan glow
-and a drop shadow. Logo images use a 1px `oklch(1 0 0 / 0.1)` outline inset by 1px.
-The live dot has a cyan box-shadow halo. No overlays or stacking contexts beyond the
-skip link (`z-index: 10`).
+Record cards are flat `--color-surface` planes with structural borders. The
+existing swap card retains `0 1.5rem 3rem #00000055` shadow and a faint cyan border
+shadow. Hero artwork has its existing cyan glow/drop shadow; logo images have a
+1px inset white-at-10%-opacity outline. The live dot has a cyan halo. No modal,
+sticky navigation, overlay or entrance animation was introduced. The skip link
+uses z-index 10 and is otherwise out of view.
 
 ## Shapes
 
-`--radius-sm` 8px (badges, selects, header logo, skip link), `--radius-md` 12px (amount
-box, primary buttons), `--radius-lg` 22px (swap card, hero logo), `--radius-pill` for
-the outlined header button, the pill and token chips. Token logos are circular.
-Allocation bar segments use 2px.
+`--radius-sm` .5rem: small badges, select and header logo.
+`--radius-md` .75rem: amount box, address strip and download/primary action.
+`--radius-lg` 1.375rem: swap card, record cards and hero artwork.
+`--radius-pill` 999px: outlined buttons, status badge and token chips.
+Token thumbnails are circular, allocation bars use 2px corners. The full artwork
+remains square and is not replaced by a cropped submission asset.
 
 ## Components
 
-All components are plain HTML and CSS classes in `web/index.html` and `web/src/style.css`;
-behaviour lives in `web/src/app.ts`.
+All components are document/CSS patterns, not library exports.
 
-- **Brand lockup** (`.brand`, `.brand-logo`, `.brand-text`): logo plus `SWARM` wordmark
-  and `SwarmSwap` app name, used in the header and footer. `img[data-logo]` elements get
-  their `src` from the bundled asset URL at start-up.
-- **Outlined button** (`.quiet`): the wallet connect control, pill-shaped, 44px tall.
-  Shows the shortened address once connected and an `aria-label` with the full address.
-- **Primary button** (`.primary`, `.primary.confirm`): full-width, 48px minimum, gold or
-  cyan fill. Enabled only when the chain read succeeded; disabled state at 50% opacity
-  with `not-allowed` cursor. Press feedback scales to 0.96 on pointer devices only.
-- **Swap card** (`.swap-card`, `.card-heading`, `.form-row`, `.amount-box`,
-  `.quote-row`): the primary task. Native `select` for direction and slippage, a single
-  amount input labelled "You pay", quote rows, the status region
-  (`#swap-status`, `role="status"`, `aria-live="polite"`) and the transaction link.
-- **Token selector** (`.token-chip`, `.token-logo`, `.token-glyph`, `.token-text`): the
-  pay and receive chips follow the direction select. SWARM shows `assets/logo.svg`
-  with alt text; ETH shows a Ξ glyph marked decorative. Rendered by `renderToken` in
-  `web/src/app.ts`.
-- **Stats band** (`.stats article`): label, value, caption. Values are tabular numerals.
-- **Status line** (`.data-status`): block number and update time, refreshed every 20s;
-  deliberately not a live region so it does not re-announce.
-- **Badges** (`.token-tag li`, `.pill`): uppercase 12px facts and the ETH ↔ SWARM pill.
-- **Skip link** (`.skip-link`): first tab stop, visible on focus, targets `main`.
+| Pattern | Source/reuse point | Behavior |
+| --- | --- | --- |
+| Brand lockup | `.brand`, `.brand-logo`, `installBranding()` | Header/footer SVG; Vite-resolved URLs; decorative image alongside visible brand name |
+| Page navigation | `.section-nav` | Native same-page anchors, wrapping row, 44px minimum target height |
+| Quiet action | `.quiet` | Outlined pill; wallet connect, retry, copy; hover, disabled and visible focus states |
+| Swap form | `.swap-card`, `review()`, `execute()` | Native direction/slippage selects, integer amounts, explicit quote/confirm stages; wallet-required controls |
+| Field feedback | `#amount-error`, `.field-error` | Inline alert, aria-invalid and input focus before any wallet request |
+| Token rows | `.token-chip`, `syncSelector()` | SVG follows SWARM on either pay/receive side; data-contract holds the exact CA; native dropdown option rows remain text |
+| Connection feedback | `.connection-row`, `update()` | Verified state or explicit error; Retry connection appears after failure; mismatch disables trading |
+| Contract strip | `.contract-strip`, `#copy-address` | Full selectable CA; Clipboard API with visible success or manual-copy fallback |
+| Record card | `.record-card`, `.record-index` | Numbered label, heading, prose, native definition list and underlined evidence/download link |
+| Download action | `.download-button` | Gold anchor with download attribute; wrapping label, format caption; JS is not required for Markdown/JSON downloads |
+| Audit disclosure | `.audit-disclosure` | Native details/summary, Enter/Space toggling, browser semantics, visible focus |
+| Status regions | `#swap-status`, `#copy-status`, `#data-status` | Swap/copy feedback uses polite announcements; passive block updates are not a live region. Connection failures are also announced through swap-status |
 
-Keyboard order observed: skip link, brand, connect, direction, amount, slippage, review,
-footer brand, two Etherscan links. Every stop shows the 3px cyan ring.
+Focus is a 3px cyan outline with 4px offset on buttons, links, fields, main and
+summary. Forced-colors uses the system Highlight outline. No overlay focus trap
+is needed. Transitions name only affected properties and use 150ms
+`cubic-bezier(0.2, 0, 0, 1)`. Existing pointer press scale is .96; reduced motion
+disables transitions and restores press scale to 1. Download hover changes fill
+only. No loading spinner is necessary: disabled controls and explanatory text
+communicate unavailable/busy states.
 
 ## Do's and don'ts
 
-- Start a new surface from `.swap-card` and the `--space-*` steps; use `--color-line`
-  for structure and `--color-line-control` for anything interactive.
-- Keep exactly one gold-filled action per view. Secondary actions use `.quiet`.
-- Put brand files only in `assets/`; import them from TypeScript or reference
-  `../assets/…` from `web/index.html` so Vite emits `dist/assets/logo.svg` and
-  `dist/assets/logo.png` under those stable names (see `web/vite.config.ts`).
-- Do not add a live region for passive data; reserve `role="status"` for the swap flow.
-- Do not introduce a light theme or a second notation; all colors are hex primitives.
-- Adding a page: copy `web/index.html`'s `head` and `header`, keep the stylesheet and
-  the `#main` landmark, and import `./src/style.css`; Vite's `base: "./"` keeps it
-  relative.
+- Reuse role tokens, spacing steps and card/link patterns. Keep secondary actions
+  outlined or underlined; reserve a filled primary action for the current task.
+- Keep source assets unchanged and use their Vite-resolved URLs for downloads.
+  Do not write `../assets` links into the final static export.
+- Distinguish a recorded snapshot from live data and an unverified claim from a
+  completed check. Do not label a draft worksheet an approved listing or audit.
+- Let addresses, long labels and fact rows wrap. Test enlarged text as well as
+  narrow viewports; do not solve overflow by hiding useful information.
+- Add related content as a semantic section inside main, using an h2, the shared
+  surfaces and a navigation anchor. There is no multi-page router to configure.
+- Preserve the gold/cyan/dark identity. No light theme, custom select, animation
+  library or external font is needed for another record section.
+
+Review evidence and remaining limits: [validation record](docs/audit/validation.md).
+Guidance attribution: [docs/INTERFACE-NOTICE.md](docs/INTERFACE-NOTICE.md).

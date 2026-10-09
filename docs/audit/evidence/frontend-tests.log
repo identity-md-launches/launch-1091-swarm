@@ -1,0 +1,68 @@
+
+> swarmswap-web@1.1.0 test
+> node --test test/*.test.ts
+
+TAP version 13
+# Subtest: amount parsing preserves 18 decimals and rejects ambiguous input
+ok 1 - amount parsing preserves 18 decimals and rejects ambiguous input
+  ---
+  duration_ms: 1.299197
+  type: 'test'
+  ...
+# Subtest: display does not use floating point or hide small nonzero balances
+ok 2 - display does not use floating point or hide small nonzero balances
+  ---
+  duration_ms: 0.265391
+  type: 'test'
+  ...
+# Subtest: ETH per token uses the native ETH currency0 orientation
+ok 3 - ETH per token uses the native ETH currency0 orientation
+  ---
+  duration_ms: 0.170483
+  type: 'test'
+  ...
+# Subtest: minimum output rounds down and can never be zero
+ok 4 - minimum output rounds down and can never be zero
+  ---
+  duration_ms: 0.239777
+  type: 'test'
+  ...
+# Subtest: static ABI round trips and bounds
+ok 5 - static ABI round trips and bounds
+  ---
+  duration_ms: 0.432262
+  type: 'test'
+  ...
+# Subtest: dynamic text decoding validates offsets and length
+ok 6 - dynamic text decoding validates offsets and length
+  ---
+  duration_ms: 0.324147
+  type: 'test'
+  ...
+# Subtest: the published configuration matches the verified launch record and fails closed otherwise
+ok 7 - the published configuration matches the verified launch record and fails closed otherwise
+  ---
+  duration_ms: 0.710139
+  type: 'test'
+  ...
+# Subtest: the token list and web manifest describe the SWARM contract and point at the shipped logo
+ok 8 - the token list and web manifest describe the SWARM contract and point at the shipped logo
+  ---
+  duration_ms: 0.80208
+  type: 'test'
+  ...
+# Subtest: RPC errors are surfaced rather than displayed as market data
+ok 9 - RPC errors are surfaced rather than displayed as market data
+  ---
+  duration_ms: 0.812847
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 111.230593

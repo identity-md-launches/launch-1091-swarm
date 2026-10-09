@@ -9,23 +9,12 @@
   <meta property="og:title" content="SwarmSwap · SWARM on Ethereum">
   <meta property="og:description" content="Trade SWARM with native ETH on Ethereum mainnet. One billion SWARM, a 1% burn on ordinary transfers, no admin keys.">
   <meta property="og:type" content="website">
-  <link rel="canonical" href="https://swarm.sites.imd.fun/">
-  <meta property="og:url" content="https://swarm.sites.imd.fun/">
-  <meta property="og:site_name" content="SwarmSwap">
-  <meta property="og:image" content="https://swarm.sites.imd.fun/assets/logo.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
-  <meta property="og:image:alt" content="SWARM: a gold and cyan cybernetic bee in a hexagonal border">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:image" content="https://swarm.sites.imd.fun/assets/logo.png">
-  <meta name="twitter:image:alt" content="SWARM: a gold and cyan cybernetic bee in a hexagonal border">
   <title>SwarmSwap · SWARM on Ethereum</title>
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <script type="module" crossorigin src="./assets/index-CiGHfbAM.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-dTT-PJCq.css">
+  <script type="module" crossorigin src="./assets/index-BalytBhb.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cn6qWsap.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -38,16 +27,12 @@
     <button id="connect" class="quiet" type="button">Connect wallet</button>
   </header>
   <main id="main" tabindex="-1">
-    <nav class="section-nav" aria-label="On this page">
-      <a href="#headline">Overview</a><a href="#swap">Swap</a><a href="#launch-report">Launch report <span aria-hidden="true">↗</span></a>
-    </nav>
     <section class="hero" aria-labelledby="headline">
       <div class="intro">
         <p class="eyebrow">One billion. One swarm.</p>
-        <h1 id="headline">Fixed supply.<br><span>Clear rules.</span></h1>
-        <p class="lede">One billion SWARM on Ethereum. Ordinary transfers send 1% to the burn address. The ERC-20 total supply stays fixed. Explore the token, trade, or inspect the launch record.</p>
+        <h1 id="headline">Small moves.<br><span>Less supply.</span></h1>
+        <p class="lede">Meet swarm. Every wallet-to-wallet transfer on the SWARM ledger sends 1% to the burn address. A fixed beginning, a collective future.</p>
         <ul class="token-tag" aria-label="Token facts"><li>SWARM</li><li>18 decimals</li><li>No admin keys</li></ul>
-        <a class="text-link hero-link" href="#launch-report">Read the launch record <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="swarm-art">
         <img data-logo="png" src="./assets/logo.png" alt="SWARM logo: a cybernetic gold and cyan bee inside a hexagonal honeycomb border" width="512" height="512">
@@ -61,9 +46,9 @@
       <article><p>Total burned</p><strong id="burned">—</strong><small id="burn-note">Reading the chain</small></article>
       <article><p>Pool spot price</p><strong id="price">—</strong><small>ETH per SWARM</small></article>
     </section>
-    <div class="connection-row"><p id="data-status" class="data-status">Loading launch status…</p><button id="retry" type="button" class="quiet" hidden>Retry connection</button></div>
+    <p id="data-status" class="data-status">Loading launch status…</p>
 
-    <section id="swap" class="trade-section" aria-labelledby="trade-title">
+    <section class="trade-section" aria-labelledby="trade-title">
       <div class="trade-copy">
         <p class="eyebrow">Join the movement</p>
         <h2>ETH in.<br> swarm out.</h2>
@@ -77,14 +62,13 @@
           <div class="form-row"><label for="direction">Direction</label><select id="direction" name="direction"><option value="buy">Buy SWARM</option><option value="sell">Sell SWARM</option></select></div>
           <label class="amount-label" for="amount">You pay</label>
           <div class="amount-box">
-            <input id="amount" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="balance amount-error" required>
+            <input id="amount" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="balance" required>
             <span class="token-chip" id="pay-token">
               <img id="pay-icon" class="token-logo" src="./assets/logo.svg" alt="SWARM logo" width="28" height="28" hidden>
               <span id="pay-glyph" class="token-glyph" aria-hidden="true">Ξ</span>
               <span class="token-text"><span id="pay-symbol">ETH</span><small id="pay-name">Ether</small></span>
             </span>
           </div>
-          <p id="amount-error" class="field-error" role="alert" hidden></p>
           <p id="balance" class="balance">Connect a wallet to see your balance</p>
           <div class="receive-row"><span>You receive</span>
             <span class="token-chip" id="receive-token">
@@ -104,54 +88,10 @@
       </div>
     </section>
     <section class="details" aria-labelledby="details-title">
-      <h2 id="details-title">How transfers work.</h2>
+      <h2 id="details-title">A little less, every time.</h2>
       <p>Send 100 SWARM between ordinary wallets: 99 arrives, 1 goes to <code>0x0000…dEaD</code>. Fractions round down to the smallest token unit. Burned tokens remain in the ERC-20 total supply; “total burned” tracks the automatic transfer charges.</p>
       <p>The token has one constructor mint, with no owner, pause, blacklist, or later mint. Launch allocations, contributor claims, and pool settlement arrive in full. The pool price is a live market snapshot; your quote includes liquidity and trading fees.</p>
       <p><strong>Known limit of the burn.</strong> Sells must reach the PoolManager whole or they cannot settle, and buys leave it whole, so transfers to or from the PoolManager are never charged. Anyone can use that path to move SWARM between wallets without the 1%, or hold it as a PoolManager claim that changes hands off the SWARM ledger. “Total burned” counts only what direct transfers actually burned. The burn cannot be moved onto pool trades without a hook, which this token deliberately does not have.</p>
-    </section>
-    <section id="launch-report" class="launch-record" aria-labelledby="report-title">
-      <div class="report-heading">
-        <div><p class="eyebrow">Launch 1091 · evidence &amp; resources</p><h2 id="report-title">The launch record.</h2></div>
-        <span class="draft-label">Draft · 09 Oct 2026</span>
-      </div>
-      <p class="report-intro">Contract facts, brand checks and the listing handoff in one place. This record separates observed evidence from the confirmations still needed.</p>
-      <div class="contract-strip">
-        <div><span class="field-caption">SWARM · Ethereum mainnet</span><code id="contract-address">0xd2aef07b4a807062c1c9f01713def52172548eca</code></div>
-        <button id="copy-address" type="button" class="quiet">Copy address</button>
-      </div>
-      <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
-      <div class="report-grid">
-        <article class="record-card">
-          <span class="record-index" aria-hidden="true">01 / CONTRACT</span>
-          <h3>Fixed from the start.</h3>
-          <p>One constructor mint. No owner or later mint. Ordinary transfers charge 1% to the sink, with disclosed exemptions.</p>
-          <dl><div><dt>Total supply</dt><dd>1,000,000,000 SWARM</dd></div><div><dt>Snapshot block</dt><dd>26,156,668</dd></div><div><dt>Source evidence</dt><dd>Sourcify match</dd></div></dl>
-          <a class="text-link" href="https://sourcify.dev/server/v2/contract/1/0xd2aef07b4a807062c1c9f01713def52172548eca?fields=all" target="_blank" rel="noopener noreferrer">Inspect source evidence ↗</a>
-        </article>
-        <article class="record-card">
-          <span class="record-index" aria-hidden="true">02 / BRAND</span>
-          <h3>One token. One mark.</h3>
-          <p>The live header and swap rows use the official SVG. Both live logo files match the repository assets byte for byte.</p>
-          <dl><div><dt>Domain</dt><dd>swarm.sites.imd.fun</dd></div><div><dt>Raster asset</dt><dd>512 × 512 PNG</dd></div><div><dt>Current host CID</dt><dd>Matches pinned record</dd></div></dl>
-          <a id="download-logo" class="text-link" href="./assets/logo.png" download="SWARM-logo-512.png">Download official PNG ↓</a>
-        </article>
-        <article class="record-card">
-          <span class="record-index" aria-hidden="true">03 / LISTINGS</span>
-          <h3>Prepared for review.</h3>
-          <p>A submission worksheet for Etherscan, CoinGecko, DexScreener and Trust Wallet. Provider approvals remain unconfirmed.</p>
-          <dl><div><dt>Package status</dt><dd>Draft · not submitted</dd></div><div><dt>Liquidity lock</dt><dd>Not verified</dd></div><div><dt>Trust Wallet image</dt><dd>Needs size optimization</dd></div></dl>
-          <a class="text-link" href="./swarm.listing-draft.json" download>Download listing JSON ↓</a>
-        </article>
-      </div>
-      <div class="report-download">
-        <div><h3>Read the complete report.</h3><p>Verification parameters, transfer mechanics, security checks, IPFS evidence and the release checklist.</p></div>
-        <a class="download-button" href="./SWARM_DRAFT_CONTRACT_REPORT.md" download>Download report <span aria-hidden="true">↓</span><small>Markdown</small></a>
-      </div>
-      <details class="audit-disclosure"><summary>What still needs confirmation?</summary><div>
-        <p>Etherscan blocked this audit request. Its verification and branding status remain unconfirmed. LP custody and any liquidity lock require separate evidence; an ownerless token does not prove locked liquidity.</p>
-        <p>The live site was missing canonical and OpenGraph image tags. This export adds them; publication and social preview refresh are pending. The old CID is evidence of the previous version, not this updated export.</p>
-        <p>The official PNG exceeds Trust Wallet’s documented 100 kB limit. Listing eligibility, applicant contact details and provider acceptance remain operator checks. No listing application or on-chain transaction was submitted by this report.</p>
-      </div></details>
     </section>
   </main>
   <footer>
